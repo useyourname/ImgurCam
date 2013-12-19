@@ -12,14 +12,22 @@ import android.content.pm.ResolveInfo;
 import java.util.List;
 
 public class MyActivity extends Activity {
+
+    private static final int ACTION_TAKE_PHOTO_B = 1;
+    private static final int ACTION_TAKE_PHOTO_S = 2;
+    private static final int ACTION_TAKE_VIDEO = 3;
+
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
         setContentView(R.layout.main);
     }
+
 
     private void dispatchTakePictureIntent(int actionCode) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
