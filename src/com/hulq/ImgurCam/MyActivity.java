@@ -33,7 +33,6 @@ public class MyActivity extends Activity {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "imgurCam_" + timeStamp;
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-//        File storageDir = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = null;
         try{
             image = File.createTempFile(
@@ -47,9 +46,7 @@ public class MyActivity extends Activity {
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
-    }
-
-    static final int REQUEST_TAKE_PHOTO = 1;
+    }//end of createImageFile()*/
 
     private void dispatchTakePictureIntent(int actionCode) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -70,17 +67,14 @@ public class MyActivity extends Activity {
         }
     }//end of dispatchTakePictureIntent(int actionCode)*/
 
-    /*private void dispatchTakePictureIntent(int actionCode) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, actionCode);
-        }
-    }//end of dispatchTakePictureIntent(int actionCode)*/
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri photoUri = Uri.parse(currentPhotoPath);
+        mediaScanIntent.setData(photoUri);
+        this.sendBroadcast(mediaScanIntent);
+    }//end of galleryAddPic()*/
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        Bundle extras = data.getExtras();
-//        Bitmap imageBitmap = (Bitmap) extras.get("data");
-//        imageView.setImageBitmap(imageBitmap);
         if (resultCode == RESULT_OK) {
             Log.d("CameraDemo", "Pic saved");
         }
@@ -91,7 +85,8 @@ public class MyActivity extends Activity {
 
         Uri photoUri = Uri.parse(currentPhotoPath);
         imageView.setImageURI(photoUri);
-    }
+        galleryAddPic();
+    }//end of onActivityResult(int requestCode, int resultCode, Intent data)*/
 
     /**
      * Called when the activity is first created.
@@ -103,7 +98,7 @@ public class MyActivity extends Activity {
         dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
         imageView = (ImageView) findViewById(R.id.imageView1);
 
-    }
-}
+    }//end of onCreate(Bundle savedInstanceState)*/
+}//end of MyActivity class*/
 
 

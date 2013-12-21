@@ -12,10 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f501df3-cb58-4ace-bc00-babd44950f02" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java" afterPath="$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/main.xml" afterPath="$PROJECT_DIR$/res/layout/main.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="imgurCam.iws" />
@@ -83,111 +80,10 @@
       <file leaf-file-name="MyActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="92" column="40" selection-start="3616" selection-end="3616" vertical-scroll-proportion="0.7083333" vertical-offset="1125" max-vertical-offset="1725">
+            <state line="58" column="32" selection-start="2134" selection-end="2134" vertical-scroll-proportion="-0.9070905" vertical-offset="1241" max-vertical-offset="1650">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ActivityThread.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/app/ActivityThread.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="73305">
-              <folding>
-                <element signature="e#0#210641#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Handler.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/os/Handler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="103" column="0" selection-start="4235" selection-end="4235" vertical-scroll-proportion="0.0" vertical-offset="1162" max-vertical-offset="11685">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Looper.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/os/Looper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="135" column="0" selection-start="4744" selection-end="4744" vertical-scroll-proportion="0.0" vertical-offset="1657" max-vertical-offset="4650">
-              <folding>
-                <element signature="e#0#11380#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-                <element signature="e#1946#1954#0" expanded="false" />
-                <element signature="e#6241#6242#0" expanded="false" />
-                <element signature="e#6275#6276#0" expanded="false" />
-                <element signature="e#10082#10083#0" expanded="false" />
-                <element signature="e#10112#10113#0" expanded="false" />
-                <element signature="e#10167#10168#0" expanded="false" />
-                <element signature="e#10196#10197#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RuntimeInit.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/com/android/internal/os/RuntimeInit.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="0" selection-start="2412" selection-end="2412" vertical-scroll-proportion="0.0" vertical-offset="397" max-vertical-offset="5775">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ComponentName.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/content/ComponentName.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="224" column="0" selection-start="7881" selection-end="7881" vertical-scroll-proportion="0.0" vertical-offset="2902" max-vertical-offset="4830">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Intent.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/content/Intent.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="4995" column="0" selection-start="219377" selection-end="219377" vertical-scroll-proportion="0.0" vertical-offset="73852" max-vertical-offset="108450">
-              <folding>
-                <element signature="e#219408#219409#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ResultInfo.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/app/ResultInfo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="0" selection-start="1273" selection-end="1273" vertical-scroll-proportion="0.0" vertical-offset="232" max-vertical-offset="1080">
-              <folding>
-                <element signature="e#0#2436#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Activity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/app/Activity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5429" column="0" selection-start="227613" selection-end="227613" vertical-scroll-proportion="0.0" vertical-offset="79537" max-vertical-offset="80325">
-              <folding>
-                <element signature="e#38172#38173#0" expanded="true" />
-                <element signature="e#38202#38203#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Instrumentation.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/app/Instrumentation.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="155" column="0" selection-start="6300" selection-end="6300" vertical-scroll-proportion="0.0" vertical-offset="1522" max-vertical-offset="26025">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -505,7 +401,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39889959" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39889959" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287483" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" x="373" y="289" width="693" height="261" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.31138545" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -796,49 +692,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/app/Activity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5429" column="0" selection-start="227613" selection-end="227613" vertical-scroll-proportion="0.0" vertical-offset="79537" max-vertical-offset="80325">
-          <folding>
-            <element signature="e#38172#38173#0" expanded="true" />
-            <element signature="e#38202#38203#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/os/Handler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="0" selection-start="4235" selection-end="4235" vertical-scroll-proportion="0.0" vertical-offset="1162" max-vertical-offset="11685">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/os/Looper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="135" column="0" selection-start="4744" selection-end="4744" vertical-scroll-proportion="0.0" vertical-offset="1657" max-vertical-offset="4650">
-          <folding>
-            <element signature="e#0#11380#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#1946#1954#0" expanded="false" />
-            <element signature="e#6241#6242#0" expanded="false" />
-            <element signature="e#6275#6276#0" expanded="false" />
-            <element signature="e#10082#10083#0" expanded="false" />
-            <element signature="e#10112#10113#0" expanded="false" />
-            <element signature="e#10167#10168#0" expanded="false" />
-            <element signature="e#10196#10197#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/app/ActivityThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="73305">
-          <folding>
-            <element signature="e#0#210641#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/com/android/internal/os/RuntimeInit.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="66" column="0" selection-start="2412" selection-end="2412" vertical-scroll-proportion="0.0" vertical-offset="397" max-vertical-offset="5775">
@@ -846,9 +699,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/os/Trace.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="212" column="0" selection-start="7944" selection-end="7944" vertical-scroll-proportion="0.0" vertical-offset="2774" max-vertical-offset="4110">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/os/Looper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="137" column="0" selection-start="4790" selection-end="4790" vertical-scroll-proportion="-5.9315405" vertical-offset="4241" max-vertical-offset="4650">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/os/Handler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="101" column="0" selection-start="4193" selection-end="4193" vertical-scroll-proportion="0.33251834" vertical-offset="1124" max-vertical-offset="11685">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/app/ActivityThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1244" column="0" selection-start="51546" selection-end="51546" vertical-scroll-proportion="0.33251834" vertical-offset="17024" max-vertical-offset="73305">
+          <folding>
+            <element signature="e#0#210641#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/app/Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5429" column="0" selection-start="227613" selection-end="227613" vertical-scroll-proportion="0.33251834" vertical-offset="79499" max-vertical-offset="80295">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="40" selection-start="3616" selection-end="3616" vertical-scroll-proportion="0.7083333" vertical-offset="1125" max-vertical-offset="1725">
+        <state line="58" column="32" selection-start="2134" selection-end="2134" vertical-scroll-proportion="-0.9070905" vertical-offset="1241" max-vertical-offset="1650">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
