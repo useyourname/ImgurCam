@@ -7,6 +7,7 @@ import android.content.Context;
 import java.util.Date;
 import android.os.Environment;
 import java.io.File;
+import com.hulq.ImgurCam.ImgurUploadTask;
 import android.widget.ImageView;
 import android.content.Intent;
 import java.io.IOException;
@@ -99,6 +100,12 @@ public class MyActivity extends Activity {
         imageView = (ImageView) findViewById(R.id.imageView1);
 
     }//end of onCreate(Bundle savedInstanceState)*/
+
+    protected void onResume() {
+        super.onResume();
+        Uri photoUri = Uri.parse(currentPhotoPath);
+        new ImgurUploadTask(photoUri, this).execute();
+    }//end of onResume()*/
 }//end of MyActivity class*/
 
 
