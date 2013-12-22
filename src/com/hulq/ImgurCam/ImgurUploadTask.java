@@ -20,6 +20,11 @@ import java.util.Scanner;
 
 //new imports
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.graphics.Color;
+import android.content.Context;
 import android.view.Gravity;
 import android.widget.TextView;
 
@@ -119,12 +124,24 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
     }
 
     protected void onPostExecute(String result){
+        TextView title = new TextView(mActivity);
+        title.setText("URL has been copied");
+        title.setGravity(Gravity.CENTER);
+        title.setTextSize(25.f);
+        title.setTextColor(Color.CYAN);
+
         TextView url = new TextView(mActivity);
         url.setText("imgur.com/" + result);
-        url.setGravity(Gravity.CENTER_HORIZONTAL);
+        url.setGravity(Gravity.CENTER);
         url.setTextIsSelectable(true);
-        new AlertDialog.Builder(mActivity).setView(url).show();
-    }
+
+        Builder popup = new AlertDialog.Builder(mActivity);
+        popup.setCustomTitle(title);
+        popup.setView(url);
+        popup.show();
+        ClipboardManager clipboard = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
+        clipboard.setPrimaryClip(ClipData.newPlainText("Imgur URL", "imgur.com/" + result));
+    }//end of onPostExecute(String result)*/
 
 }//end of class
 
