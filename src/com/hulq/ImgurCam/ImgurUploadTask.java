@@ -124,6 +124,9 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
     }
 
     protected void onPostExecute(String result){
+        ClipboardManager clipboard = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
+        clipboard.setPrimaryClip(ClipData.newPlainText("Imgur URL", "imgur.com/" + result));
+
         TextView title = new TextView(mActivity);
         title.setText("URL has been copied");
         title.setGravity(Gravity.CENTER);
@@ -138,9 +141,11 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         Builder popup = new AlertDialog.Builder(mActivity);
         popup.setCustomTitle(title);
         popup.setView(url);
-        popup.show();
-        ClipboardManager clipboard = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
-        clipboard.setPrimaryClip(ClipData.newPlainText("Imgur URL", "imgur.com/" + result));
+
+        if(!mActivity.isFinishing()){
+            popup.show();
+        }
+
     }//end of onPostExecute(String result)*/
 
 }//end of class

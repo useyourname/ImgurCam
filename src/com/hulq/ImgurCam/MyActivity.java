@@ -1,24 +1,17 @@
 package com.hulq.ImgurCam;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.content.Context;
+import android.content.res.Configuration;
 import java.util.Date;
 import android.os.Environment;
 import java.io.File;
-import com.hulq.ImgurCam.ImgurUploadTask;
 import android.widget.ImageView;
 import android.content.Intent;
 import java.io.IOException;
-import android.util.Log;
 import android.provider.MediaStore;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import java.text.SimpleDateFormat;
 import android.net.Uri;
-import android.view.View;
-
 
 public class MyActivity extends Activity {
 
@@ -76,20 +69,20 @@ public class MyActivity extends Activity {
     }//end of galleryAddPic()*/
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (resultCode == RESULT_OK) {
-//            Log.d("CameraDemo", "Pic saved");
-//        }else{
-//            finish();
-//        }
         if(resultCode != RESULT_OK){
             finish();
+        }else{
+            Uri photoUri = Uri.parse(currentPhotoPath);
+            imageView.setImageURI(photoUri);
+            galleryAddPic();
+            new ImgurUploadTask(photoUri, this).execute();
         }
-
-        Uri photoUri = Uri.parse(currentPhotoPath);
-        imageView.setImageURI(photoUri);
-        galleryAddPic();
     }//end of onActivityResult(int requestCode, int resultCode, Intent data)*/
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
     /**
      * Called when the activity is first created.
      */
@@ -99,14 +92,7 @@ public class MyActivity extends Activity {
         setContentView(R.layout.main);
         dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
         imageView = (ImageView) findViewById(R.id.imageView1);
-
     }//end of onCreate(Bundle savedInstanceState)*/
-
-    protected void onResume() {
-        super.onResume();
-        Uri photoUri = Uri.parse(currentPhotoPath);
-        new ImgurUploadTask(photoUri, this).execute();
-    }//end of onResume()*/
 }//end of MyActivity class*/
 
 
