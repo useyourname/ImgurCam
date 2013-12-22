@@ -76,13 +76,14 @@ public class MyActivity extends Activity {
     }//end of galleryAddPic()*/
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            Log.d("CameraDemo", "Pic saved");
+//        if (resultCode == RESULT_OK) {
+//            Log.d("CameraDemo", "Pic saved");
+//        }else{
+//            finish();
+//        }
+        if(resultCode != RESULT_OK){
+            finish();
         }
-        //imgur
-        String clientID = "a0c473fa0852365";
-        String clientSecret = "21e5c9526565e24b842bb4bf108c562e6926d7f7";
-        String url = "http://api.imgur.com/3/image";
 
         Uri photoUri = Uri.parse(currentPhotoPath);
         imageView.setImageURI(photoUri);
