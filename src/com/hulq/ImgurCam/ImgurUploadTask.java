@@ -163,7 +163,9 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                 new NotificationCompat.Builder(mActivity)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle("Image URL copied")
-                .setContentText("Image uploaded and URL ready to be pasted.");
+                .setContentText("Image uploaded and URL ready to be pasted.")
+                .setDefaults(Notification.DEFAULT_ALL);
+
 
         NotificationManager mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(0, mBuilder.build());
