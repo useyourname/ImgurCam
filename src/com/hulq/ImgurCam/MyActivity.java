@@ -76,7 +76,7 @@ public class MyActivity extends Activity {
             Uri photoUri = Uri.parse(currentPhotoPath);
             imageView.setImageURI(photoUri);
 //            galleryAddPic();
-            new ImgurUploadTask(photoUri, this, photoFile).execute();
+            new ImgurUploadTask(photoUri, this).execute();
         }
     }//end of onActivityResult(int requestCode, int resultCode, Intent data)*/
 
@@ -95,6 +95,12 @@ public class MyActivity extends Activity {
         dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
         imageView = (ImageView) findViewById(R.id.imageView1);
     }//end of onCreate(Bundle savedInstanceState)*/
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        photoFile.delete();
+    }
 }//end of MyActivity class*/
 
 

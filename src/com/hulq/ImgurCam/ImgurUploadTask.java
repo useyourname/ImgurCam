@@ -21,6 +21,7 @@ import java.util.Scanner;
 //new imports
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.graphics.BitmapFactory;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.graphics.Color;
@@ -43,12 +44,10 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
     private Activity mActivity;
     private Uri mImageUri;  // local Uri to upload
-    private File photoFile;
 
-    public ImgurUploadTask(Uri imageUri, Activity activity, File photoFile) {
+    public ImgurUploadTask(Uri imageUri, Activity activity) {
         this.mImageUri = imageUri;
         this.mActivity = activity;
-        this.photoFile = photoFile;
     }
 
     @Override
@@ -170,13 +169,22 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                 new NotificationCompat.Builder(mActivity)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle("Image URL copied")
-                .setContentText("Image uploaded and URL ready to be pasted.")
+                .setContentText("imgur.com/" + result)
                 .setDefaults(Notification.DEFAULT_ALL);
+
+        NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
+        bigPictureStyle.setBigContentTitle("You can paste the URL now");
+        bigPictureStyle.setSummaryText("imgur.com/" + result);
+        bigPictureStyle.bigPicture(BitmapFactory.decodeFile(mImageUri.getPath()));
+
+        notiBuilder.setStyle(bigPictureStyle);
+
         NotificationManager mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(0, notiBuilder.build());
 
         //delete picture from memory
-        photoFile.delete();
+        File toBeDeleted = new File(mImageUri.getPath());
+        toBeDeleted.delete();
     }//end of onPostExecute(String result)*/
 
 }//end of class
