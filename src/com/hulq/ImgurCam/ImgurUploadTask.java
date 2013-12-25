@@ -26,6 +26,10 @@ import android.content.ClipboardManager;
 import android.graphics.Color;
 import android.content.Context;
 import android.view.Gravity;
+import android.content.DialogInterface;
+import android.app.Notification;
+import android.support.v4.app.NotificationCompat;
+import android.app.NotificationManager;
 import android.widget.TextView;
 
 public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
@@ -134,18 +138,35 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         title.setTextColor(Color.CYAN);
 
         TextView url = new TextView(mActivity);
-        url.setText("imgur.com/" + result);
+        url.setText("\nimgur.com/" + result);
         url.setGravity(Gravity.CENTER);
         url.setTextIsSelectable(true);
 
         Builder popup = new AlertDialog.Builder(mActivity);
         popup.setCustomTitle(title);
         popup.setView(url);
+        popup.setPositiveButton(android.R.string.ok,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //dismiss the dialog
+                        dialog.cancel();
+                    }
+                });
 
+        final AlertDialog alert = popup.create();
         if(!mActivity.isFinishing()){
-            popup.show();
+            alert.show();
         }
 
+        //Notification
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(mActivity)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle("Image URL copied")
+                .setContentText("Image uploaded and URL ready to be pasted.");
+
+        NotificationManager mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(0, mBuilder.build());
     }//end of onPostExecute(String result)*/
 
 }//end of class
