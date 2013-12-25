@@ -170,7 +170,8 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle("Image URL copied")
                 .setContentText("imgur.com/" + result)
-                .setDefaults(Notification.DEFAULT_ALL);
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setAutoCancel(true);
 
         NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
         bigPictureStyle.setBigContentTitle("You can paste the URL now");
