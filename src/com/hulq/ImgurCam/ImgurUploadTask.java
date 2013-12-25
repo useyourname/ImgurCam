@@ -25,7 +25,10 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.graphics.Color;
 import android.content.Context;
+import android.os.Environment;
+import java.io.File;
 import android.view.Gravity;
+import android.content.Intent;
 import android.content.DialogInterface;
 import android.app.Notification;
 import android.support.v4.app.NotificationCompat;
@@ -40,10 +43,12 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
     private Activity mActivity;
     private Uri mImageUri;  // local Uri to upload
+    private File photoFile;
 
-    public ImgurUploadTask(Uri imageUri, Activity activity) {
+    public ImgurUploadTask(Uri imageUri, Activity activity, File photoFile) {
         this.mImageUri = imageUri;
         this.mActivity = activity;
+        this.photoFile = photoFile;
     }
 
     @Override
@@ -145,11 +150,13 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         Builder popup = new AlertDialog.Builder(mActivity);
         popup.setCustomTitle(title);
         popup.setView(url);
+        popup.setCancelable(false);
         popup.setPositiveButton(android.R.string.ok,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //dismiss the dialog
                         dialog.cancel();
+                        mActivity.recreate();
                     }
                 });
 
@@ -159,16 +166,17 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         }
 
         //Notification
-        NotificationCompat.Builder mBuilder =
+        NotificationCompat.Builder notiBuilder =
                 new NotificationCompat.Builder(mActivity)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle("Image URL copied")
                 .setContentText("Image uploaded and URL ready to be pasted.")
                 .setDefaults(Notification.DEFAULT_ALL);
-
-
         NotificationManager mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(0, mBuilder.build());
+        mNotificationManager.notify(0, notiBuilder.build());
+
+        //delete picture from memory
+        photoFile.delete();
     }//end of onPostExecute(String result)*/
 
 }//end of class

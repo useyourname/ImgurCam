@@ -21,6 +21,7 @@ public class MyActivity extends Activity {
     private ImageView imageView;
 
     private String currentPhotoPath;
+    private File photoFile;
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -45,7 +46,6 @@ public class MyActivity extends Activity {
     private void dispatchTakePictureIntent(int actionCode) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            File photoFile = null;
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
@@ -69,13 +69,14 @@ public class MyActivity extends Activity {
     }//end of galleryAddPic()*/
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode != RESULT_OK){
+        if (resultCode != RESULT_OK) {
+            photoFile.delete();
             finish();
-        }else{
+        } else {
             Uri photoUri = Uri.parse(currentPhotoPath);
             imageView.setImageURI(photoUri);
-            galleryAddPic();
-            new ImgurUploadTask(photoUri, this).execute();
+//            galleryAddPic();
+            new ImgurUploadTask(photoUri, this, photoFile).execute();
         }
     }//end of onActivityResult(int requestCode, int resultCode, Intent data)*/
 
@@ -83,6 +84,7 @@ public class MyActivity extends Activity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
+
     /**
      * Called when the activity is first created.
      */
