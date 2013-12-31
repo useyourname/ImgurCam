@@ -1,11 +1,15 @@
 package com.hulq.ImgurCam;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.content.res.Configuration;
 import java.util.Date;
 import android.os.Environment;
 import java.io.File;
+
+import android.support.v4.app.NotificationCompat;
 import android.widget.ImageView;
 import android.content.Intent;
 import java.io.IOException;

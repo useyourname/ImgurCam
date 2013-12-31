@@ -45,9 +45,27 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
     private Activity mActivity;
     private Uri mImageUri;  // local Uri to upload
 
+    private NotificationCompat.Builder notiBuilder;
+    private NotificationManager mNotificationManager;
+
     public ImgurUploadTask(Uri imageUri, Activity activity) {
         this.mImageUri = imageUri;
         this.mActivity = activity;
+    }
+
+    @Override
+    protected void onPreExecute(){
+        super.onPreExecute();
+
+        notiBuilder = new NotificationCompat.Builder(mActivity);
+        notiBuilder.setContentTitle("Picture Upload")
+                .setContentText("Upload in progress")
+                .setSmallIcon(R.drawable.upload);
+        // Sets an activity indicator for an operation of indeterminate length
+        notiBuilder.setProgress(0, 0, true);
+        // Issues the notification
+        mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(0, notiBuilder.build());
     }
 
     @Override
@@ -66,6 +84,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         try {
             conn = (HttpURLConnection) new URL(UPLOAD_URL).openConnection();
             conn.setDoOutput(true);
+            conn.setChunkedStreamingMode(0);
 
             ImgurAuthorization.getInstance(mActivity).addToHttpURLConnection(conn);
 
@@ -125,9 +144,9 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
         JSONObject root = new JSONObject(sb.toString());
         String id = root.getJSONObject("data").getString("id");
-        String deletehash = root.getJSONObject("data").getString("deletehash");
 
-        Log.i(TAG, "new imgur url: http://imgur.com/" + id + " (delete hash: " + deletehash + ")");
+        //String deletehash = root.getJSONObject("data").getString("deletehash");
+        //Log.i(TAG, "new imgur url: http://imgur.com/" + id + " (delete hash: " + deletehash + ")");
         return id;
     }
 
@@ -165,8 +184,9 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         }
 
         //Notification
-        NotificationCompat.Builder notiBuilder =
-                new NotificationCompat.Builder(mActivity)
+//        NotificationCompat.Builder notiBuilder =
+//                new NotificationCompat.Builder(mActivity)
+                notiBuilder.setProgress(0, 0, false)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle("Image URL copied")
                 .setContentText("imgur.com/" + result)
@@ -174,13 +194,13 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                 .setAutoCancel(true);
 
         NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
-        bigPictureStyle.setBigContentTitle("You can paste the URL now");
+        bigPictureStyle.setBigContentTitle("Image URL copied");
         bigPictureStyle.setSummaryText("imgur.com/" + result);
         bigPictureStyle.bigPicture(BitmapFactory.decodeFile(mImageUri.getPath()));
 
         notiBuilder.setStyle(bigPictureStyle);
 
-        NotificationManager mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(0, notiBuilder.build());
 
         //delete picture from memory
