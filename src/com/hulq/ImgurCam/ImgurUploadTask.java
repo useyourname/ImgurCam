@@ -186,6 +186,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         //delete picture from memory
         File toBeDeleted = new File(mImageUri.getPath());
         toBeDeleted.delete();
+        //test
     }//end of onPostExecute(String result)*/
 
 }//end of class
