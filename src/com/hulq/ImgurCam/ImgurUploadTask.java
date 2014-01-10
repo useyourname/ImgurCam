@@ -45,6 +45,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
     private Activity mActivity;
     private Uri mImageUri;  // local Uri to upload
+    private Bitmap bImage;
 
     private NotificationCompat.Builder notiBuilder;
     private NotificationManager mNotificationManager;
@@ -124,11 +125,14 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                 conn.disconnect();
             } catch (Exception ignore) {}
             try {
+                bImage = BitmapFactory.decodeFile(mImageUri.getPath());
                 File toBeDeleted = new File(mImageUri.getPath());
                 if(toBeDeleted.exists()){
                     toBeDeleted.delete();
                 }
                 mNotificationManager.cancel(0);
+                ClipboardManager clipboard = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboard.setPrimaryClip(ClipData.newPlainText("Imgur URL", "imgur.com/" + onInput(responseIn)));
             }catch (Exception ignore)  {}
 //            try {
 //                imageIn.close();
@@ -208,7 +212,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
         bigPictureStyle.setBigContentTitle("Image URL copied");
         bigPictureStyle.setSummaryText("imgur.com/" + result);
-        bigPictureStyle.bigPicture(BitmapFactory.decodeFile(mImageUri.getPath()));
+        bigPictureStyle.bigPicture(bImage);
 
         notiBuilder.setStyle(bigPictureStyle);
 
