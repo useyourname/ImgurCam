@@ -103,7 +103,9 @@ public class MyActivity extends Activity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        photoFile.delete();
+        if(photoFile.exists()){
+            photoFile.delete();
+        }
     }
 }//end of MyActivity class*/
 

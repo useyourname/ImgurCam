@@ -1,6 +1,7 @@
 package com.hulq.ImgurCam;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -70,16 +71,19 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... params) {
-        InputStream imageIn;
-        try {
-            imageIn = mActivity.getContentResolver().openInputStream(mImageUri);
-        } catch (FileNotFoundException e) {
-            Log.e(TAG, "could not open InputStream", e);
-            return null;
-        }
+//        InputStream imageIn;
+//        try {
+//            imageIn = mActivity.getContentResolver().openInputStream(mImageUri);
+//        } catch (FileNotFoundException e) {
+//            Log.e(TAG, "could not open InputStream", e);
+//            return null;
+//        }
+
 
         HttpURLConnection conn = null;
         InputStream responseIn = null;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mImageUri.getPath());
 
         try {
             conn = (HttpURLConnection) new URL(UPLOAD_URL).openConnection();
@@ -89,7 +93,8 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             ImgurAuthorization.getInstance(mActivity).addToHttpURLConnection(conn);
 
             OutputStream out = conn.getOutputStream();
-            copy(imageIn, out);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, out);
+//            copy(imageIn, out);
             out.flush();
             out.close();
 
@@ -119,10 +124,17 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                 conn.disconnect();
             } catch (Exception ignore) {}
             try {
-                imageIn.close();
-            } catch (Exception ignore) {}
+                File toBeDeleted = new File(mImageUri.getPath());
+                if(toBeDeleted.exists()){
+                    toBeDeleted.delete();
+                }
+                mNotificationManager.cancel(0);
+            }catch (Exception ignore)  {}
+//            try {
+//                imageIn.close();
+//            } catch (Exception ignore) {}
         }
-    }
+    }//end of doInBackground()*/
 
     private static int copy(InputStream input, OutputStream output) throws IOException {
         byte[] buffer = new byte[8192];
@@ -179,7 +191,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                 });
 
         final AlertDialog alert = popup.create();
-        if(!mActivity.isFinishing()){
+        if(!mActivity.isFinishing() && !mActivity.isDestroyed()){
             alert.show();
         }
 
@@ -205,7 +217,10 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
         //delete picture from memory
         File toBeDeleted = new File(mImageUri.getPath());
-        toBeDeleted.delete();
+        if(toBeDeleted.exists()){
+            toBeDeleted.delete();
+        }
+
         
     }//end of onPostExecute(String result)*/
 
