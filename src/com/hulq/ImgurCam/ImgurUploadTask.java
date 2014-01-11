@@ -72,15 +72,6 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... params) {
-//        InputStream imageIn;
-//        try {
-//            imageIn = mActivity.getContentResolver().openInputStream(mImageUri);
-//        } catch (FileNotFoundException e) {
-//            Log.e(TAG, "could not open InputStream", e);
-//            return null;
-//        }
-
-
         HttpURLConnection conn = null;
         InputStream responseIn = null;
 
@@ -95,13 +86,13 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
             OutputStream out = conn.getOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 50, out);
-//            copy(imageIn, out);
             out.flush();
             out.close();
 
             if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 responseIn = conn.getInputStream();
-                return onInput(responseIn);
+                String result = onInput(responseIn);
+                return result;
             }
             else {
                 Log.i(TAG, "responseCode=" + conn.getResponseCode());
@@ -124,19 +115,6 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             try {
                 conn.disconnect();
             } catch (Exception ignore) {}
-            try {
-                bImage = BitmapFactory.decodeFile(mImageUri.getPath());
-                File toBeDeleted = new File(mImageUri.getPath());
-                if(toBeDeleted.exists()){
-                    toBeDeleted.delete();
-                }
-                mNotificationManager.cancel(0);
-                ClipboardManager clipboard = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
-                clipboard.setPrimaryClip(ClipData.newPlainText("Imgur URL", "imgur.com/" + onInput(responseIn)));
-            }catch (Exception ignore)  {}
-//            try {
-//                imageIn.close();
-//            } catch (Exception ignore) {}
         }
     }//end of doInBackground()*/
 
@@ -149,7 +127,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             count += n;
         }
         return count;
-    }
+    }//end of copy
 
     protected String onInput(InputStream in) throws Exception {
         StringBuilder sb = new StringBuilder();
@@ -164,8 +142,18 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         //String deletehash = root.getJSONObject("data").getString("deletehash");
         //Log.i(TAG, "new imgur url: http://imgur.com/" + id + " (delete hash: " + deletehash + ")");
         return id;
-    }
+    }//end of onInput(InputStream)
 
+    @Override
+    protected void onCancelled(String result){
+        File toBeDeleted = new File(mImageUri.getPath());
+        if(toBeDeleted.exists()){
+            toBeDeleted.delete();
+        }
+        mNotificationManager.cancel(0);
+    }//end of onCancelled
+
+    @Override
     protected void onPostExecute(String result){
         ClipboardManager clipboard = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
         clipboard.setPrimaryClip(ClipData.newPlainText("Imgur URL", "imgur.com/" + result));
@@ -199,16 +187,14 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             alert.show();
         }
 
-        //Notification
-//        NotificationCompat.Builder notiBuilder =
-//                new NotificationCompat.Builder(mActivity)
-                notiBuilder.setProgress(0, 0, false)
-                .setSmallIcon(R.drawable.ic_launcher)
-                .setContentTitle("Image URL copied")
-                .setContentText("imgur.com/" + result)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setAutoCancel(true);
+        notiBuilder.setProgress(0, 0, false)
+        .setSmallIcon(R.drawable.ic_launcher)
+        .setContentTitle("Image URL copied")
+        .setContentText("imgur.com/" + result)
+        .setDefaults(Notification.DEFAULT_ALL)
+        .setAutoCancel(true);
 
+        bImage = BitmapFactory.decodeFile(mImageUri.getPath());
         NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
         bigPictureStyle.setBigContentTitle("Image URL copied");
         bigPictureStyle.setSummaryText("imgur.com/" + result);
@@ -219,13 +205,10 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(0, notiBuilder.build());
 
-        //delete picture from memory
         File toBeDeleted = new File(mImageUri.getPath());
         if(toBeDeleted.exists()){
             toBeDeleted.delete();
         }
-
-        
     }//end of onPostExecute(String result)*/
 
 }//end of class
