@@ -29,6 +29,8 @@ public class MyActivity extends Activity {
     private File photoFile;
     private FileObserver observer;
 
+    private boolean finishCalled = false;
+
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -78,7 +80,11 @@ public class MyActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) {
             photoFile.delete();
+            finishCalled = true;
             finish();
+//            Intent i = new Intent(Intent.ACTION_MAIN);
+//            i.addCategory(Intent.CATEGORY_HOME);
+//            startActivity(i);
         } else {
             Uri photoUri = Uri.parse(currentPhotoPath);
             imageView.setImageURI(photoUri);
@@ -123,8 +129,15 @@ public class MyActivity extends Activity {
         if(photoFile.exists() && !currentPhotoPath.contains("Screenshots")){
             photoFile.delete();
         }
-        observer.stopWatching();
-    }
+        if(!finishCalled){
+            observer.stopWatching();
+        }
+    }//end of onDestroy()*/
+
+    protected void onRestart(){
+        super.onRestart();
+        finishCalled = false;
+    }//end of onRestart()
 }//end of MyActivity class*/
 
 
