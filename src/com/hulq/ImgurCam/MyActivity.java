@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import java.util.Date;
 import android.os.Environment;
 import java.io.File;
+import android.os.FileObserver;
 
 import android.support.v4.app.NotificationCompat;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ public class MyActivity extends Activity {
 
     private String currentPhotoPath;
     private File photoFile;
+    private FileObserver observer;
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -39,6 +41,7 @@ public class MyActivity extends Activity {
                     ".jpg",         /* suffix */
                     storageDir      /* directory */
             );
+            image.deleteOnExit();
         }catch(IOException ex){
             System.out.println("createTempFile FAILED");
         }
@@ -96,6 +99,20 @@ public class MyActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        this.observer = new FileObserver(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/")
+        {
+            public void onEvent(int event, String path)
+            {
+                if ((event == FileObserver.CLOSE_WRITE))
+                {
+                    Uri photoUri = Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/" + path));
+                    new ImgurUploadTask(photoUri, MyActivity.this).execute();
+                }
+            }
+        };
+        this.observer.startWatching();
+
         dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
         imageView = (ImageView) findViewById(R.id.imageView1);
     }//end of onCreate(Bundle savedInstanceState)*/
@@ -103,9 +120,10 @@ public class MyActivity extends Activity {
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        if(photoFile.exists()){
+        if(photoFile.exists() && !currentPhotoPath.contains("Screenshots")){
             photoFile.delete();
         }
+        observer.stopWatching();
     }
 }//end of MyActivity class*/
 

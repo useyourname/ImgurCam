@@ -150,7 +150,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onCancelled(String result){
         File toBeDeleted = new File(mImageUri.getPath());
-        if(toBeDeleted.exists()){
+        if(toBeDeleted.exists() && !mImageUri.getPath().contains("Screenshots")){
             toBeDeleted.delete();
         }
         mNotificationManager.cancel(0);
@@ -161,33 +161,35 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         ClipboardManager clipboard = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
         clipboard.setPrimaryClip(ClipData.newPlainText("Imgur URL", "imgur.com/" + result));
 
-        TextView title = new TextView(mActivity);
-        title.setText("URL has been copied");
-        title.setGravity(Gravity.CENTER);
-        title.setTextSize(25.f);
-        title.setTextColor(Color.CYAN);
+        if(!mImageUri.getPath().contains("Screenshots")){
+            TextView title = new TextView(mActivity);
+            title.setText("URL has been copied");
+            title.setGravity(Gravity.CENTER);
+            title.setTextSize(25.f);
+            title.setTextColor(Color.CYAN);
 
-        TextView url = new TextView(mActivity);
-        url.setText("\nimgur.com/" + result);
-        url.setGravity(Gravity.CENTER);
-        url.setTextIsSelectable(true);
+            TextView url = new TextView(mActivity);
+            url.setText("\nimgur.com/" + result);
+            url.setGravity(Gravity.CENTER);
+            url.setTextIsSelectable(true);
 
-        Builder popup = new AlertDialog.Builder(mActivity);
-        popup.setCustomTitle(title);
-        popup.setView(url);
-        popup.setCancelable(false);
-        popup.setPositiveButton(android.R.string.ok,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        //dismiss the dialog
-                        dialog.cancel();
-                        mActivity.recreate();
-                    }
-                });
+            Builder popup = new AlertDialog.Builder(mActivity);
+            popup.setCustomTitle(title);
+            popup.setView(url);
+            popup.setCancelable(false);
+            popup.setPositiveButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                            dialog.cancel();
+                            mActivity.recreate();
+                        }
+                    });
 
-        final AlertDialog alert = popup.create();
-        if(!mActivity.isFinishing() && !mActivity.isDestroyed()){
-            alert.show();
+            final AlertDialog alert = popup.create();
+            if(!mActivity.isFinishing() && !mActivity.isDestroyed() && !mImageUri.getPath().contains("Screenshots")){
+                alert.show();
+            }
         }
 
         //Notification
@@ -223,7 +225,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
         //delete picture
         File toBeDeleted = new File(mImageUri.getPath());
-        if(toBeDeleted.exists()){
+        if(toBeDeleted.exists() && !mImageUri.getPath().contains("Screenshots")){
             toBeDeleted.delete();
         }
     }//end of onPostExecute(String result)*/
