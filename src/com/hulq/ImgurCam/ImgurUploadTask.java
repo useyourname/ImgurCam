@@ -27,6 +27,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.graphics.Color;
 import android.content.Context;
+import android.content.ComponentName;
 import android.os.Environment;
 import java.io.File;
 import android.view.Gravity;
@@ -35,7 +36,9 @@ import android.content.DialogInterface;
 import android.app.Notification;
 import android.support.v4.app.NotificationCompat;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
@@ -187,12 +190,21 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             alert.show();
         }
 
+        //Notification
+        Intent notificationIntent = new Intent("android.intent.action.MAIN");
+        notificationIntent.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"));
+        notificationIntent.addCategory("android.intent.category.LAUNCHER");
+        notificationIntent.setData(Uri.parse("imgur.com/" + result));
+        PendingIntent pIntent = PendingIntent.getActivity(mActivity, 0, notificationIntent, 0);
+
+
         notiBuilder.setProgress(0, 0, false)
         .setSmallIcon(R.drawable.ic_launcher)
         .setContentTitle("Image URL copied")
         .setContentText("imgur.com/" + result)
-        .setDefaults(Notification.DEFAULT_ALL)
-        .setAutoCancel(true);
+        .setDefaults(Notification.DEFAULT_LIGHTS)
+        .setAutoCancel(true)
+        .setContentIntent(pIntent);
 
         bImage = BitmapFactory.decodeFile(mImageUri.getPath());
         NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
@@ -205,6 +217,11 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(0, notiBuilder.build());
 
+        //Toast
+        Toast toast = Toast.makeText(mActivity, "Copied to clipboard:\nimgur.com/" + result, 1);
+        toast.show();
+
+        //delete picture
         File toBeDeleted = new File(mImageUri.getPath());
         if(toBeDeleted.exists()){
             toBeDeleted.delete();
