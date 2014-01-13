@@ -6,11 +6,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.hulq.ImgurCam.ImgurAuthorization;
-
 import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,17 +14,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-
 //new imports
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.graphics.Color;
 import android.content.Context;
 import android.content.ComponentName;
-import android.os.Environment;
 import java.io.File;
 import android.view.Gravity;
 import android.content.Intent;
@@ -94,8 +89,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
             if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 responseIn = conn.getInputStream();
-                String result = onInput(responseIn);
-                return result;
+                return onInput(responseIn);
             }
             else {
                 Log.i(TAG, "responseCode=" + conn.getResponseCode());
@@ -142,8 +136,8 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         JSONObject root = new JSONObject(sb.toString());
         String id = root.getJSONObject("data").getString("id");
 
-        //String deletehash = root.getJSONObject("data").getString("deletehash");
-        //Log.i(TAG, "new imgur url: http://imgur.com/" + id + " (delete hash: " + deletehash + ")");
+        String deletehash = root.getJSONObject("data").getString("deletehash");
+        Log.i(TAG, "new imgur url: http://imgur.com/" + id + " (delete hash: " + deletehash + ")");
         return id;
     }//end of onInput(InputStream)
 
@@ -201,20 +195,21 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
 
         notiBuilder.setProgress(0, 0, false)
-        .setSmallIcon(R.drawable.ic_launcher)
-        .setContentTitle("Image URL copied")
-        .setContentText("imgur.com/" + result)
-        .setDefaults(Notification.DEFAULT_LIGHTS)
-        .setAutoCancel(true)
-        .setContentIntent(pIntent);
+            .setSmallIcon(R.drawable.ic_launcher)
+            .setContentTitle("Image URL copied")
+            .setContentText("imgur.com/" + result)
+            .setDefaults(Notification.DEFAULT_LIGHTS)
+            .setAutoCancel(true)
+            .setContentIntent(pIntent);
 
-        bImage = BitmapFactory.decodeFile(mImageUri.getPath());
-        NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
-        bigPictureStyle.setBigContentTitle("Image URL copied");
-        bigPictureStyle.setSummaryText("imgur.com/" + result);
-        bigPictureStyle.bigPicture(bImage);
-
-        notiBuilder.setStyle(bigPictureStyle);
+        if(Build.VERSION.SDK_INT >= 16){
+            bImage = BitmapFactory.decodeFile(mImageUri.getPath());
+            NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
+            bigPictureStyle.setBigContentTitle("Image URL copied");
+            bigPictureStyle.setSummaryText("imgur.com/" + result);
+            bigPictureStyle.bigPicture(bImage);
+            notiBuilder.setStyle(bigPictureStyle);
+        }
 
         mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(0, notiBuilder.build());
