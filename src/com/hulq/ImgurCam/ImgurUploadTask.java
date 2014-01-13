@@ -4,20 +4,14 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
-
-import com.hulq.ImgurCam.ImgurAuthorization;
-
+import android.os.Build;
 import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
-
 
 //new imports
 import android.app.AlertDialog;
@@ -28,7 +22,6 @@ import android.content.ClipboardManager;
 import android.graphics.Color;
 import android.content.Context;
 import android.content.ComponentName;
-import android.os.Environment;
 import java.io.File;
 import android.view.Gravity;
 import android.content.Intent;
@@ -94,22 +87,18 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
             if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 responseIn = conn.getInputStream();
-                String result = onInput(responseIn);
-                return result;
+                return onInput(responseIn);
             }
             else {
-                Log.i(TAG, "responseCode=" + conn.getResponseCode());
                 responseIn = conn.getErrorStream();
                 StringBuilder sb = new StringBuilder();
                 Scanner scanner = new Scanner(responseIn);
                 while (scanner.hasNext()) {
                     sb.append(scanner.next());
                 }
-                Log.i(TAG, "error response: " + sb.toString());
                 return null;
             }
         } catch (Exception ex) {
-            Log.e(TAG, "Error during POST", ex);
             return null;
         } finally {
             try {
@@ -138,12 +127,8 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         while (scanner.hasNext()) {
             sb.append(scanner.next());
         }
-
         JSONObject root = new JSONObject(sb.toString());
         String id = root.getJSONObject("data").getString("id");
-
-        //String deletehash = root.getJSONObject("data").getString("deletehash");
-        //Log.i(TAG, "new imgur url: http://imgur.com/" + id + " (delete hash: " + deletehash + ")");
         return id;
     }//end of onInput(InputStream)
 
@@ -208,13 +193,15 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         .setAutoCancel(true)
         .setContentIntent(pIntent);
 
-        bImage = BitmapFactory.decodeFile(mImageUri.getPath());
-        NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
-        bigPictureStyle.setBigContentTitle("Image URL copied");
-        bigPictureStyle.setSummaryText("imgur.com/" + result);
-        bigPictureStyle.bigPicture(bImage);
+        if(Build.VERSION.SDK_INT >= 16){
+            bImage = BitmapFactory.decodeFile(mImageUri.getPath());
+            NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
+            bigPictureStyle.setBigContentTitle("Image URL copied");
+            bigPictureStyle.setSummaryText("imgur.com/" + result);
+            bigPictureStyle.bigPicture(bImage);
 
-        notiBuilder.setStyle(bigPictureStyle);
+            notiBuilder.setStyle(bigPictureStyle);
+        }
 
         mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(0, notiBuilder.build());

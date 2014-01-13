@@ -3,10 +3,6 @@ package com.hulq.ImgurCam;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
-import android.util.Log;
-
-//import com.imgur.api3example.ImgurSampleApplication;
-import com.hulq.ImgurCam.MyAppConstants;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -72,7 +68,6 @@ public class ImgurAuthorization {
         String refreshToken = prefs.getString("refresh_token", null);
 
         if (refreshToken == null) {
-            Log.w(TAG, "refresh token is null; cannot request access token. login first.");
             return null;
         }
 
@@ -104,21 +99,18 @@ public class ImgurAuthorization {
                 in.close();
             }
             else {
-                Log.i(TAG, "responseCode=" + conn.getResponseCode());
                 InputStream errorStream = conn.getErrorStream();
                 StringBuilder sb = new StringBuilder();
                 Scanner scanner = new Scanner(errorStream);
                 while (scanner.hasNext()) {
                     sb.append(scanner.next());
                 }
-                Log.i(TAG, "error response: " + sb.toString());
                 errorStream.close();
             }
 
             return prefs.getString("access_token", null);
 
         } catch (Exception ex) {
-            Log.e(TAG, "Could not request new access token", ex);
             return null;
         } finally {
             try {
