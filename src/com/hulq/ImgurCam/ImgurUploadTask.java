@@ -159,12 +159,17 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             toBeDeleted.delete();
         }
         mNotificationManager.cancel(0);
+        handleFailedUpload();
     }//end of onCancelled
 
     @Override
     protected void onPostExecute(String result){
         if(result == null || result.isEmpty()){
-            handleNullResult();
+            if(isOnline()){
+                new ImgurUploadTask(mImageUri, mActivity).execute();
+            }else{
+                handleFailedUpload();
+            }
             return;
         }
 
@@ -197,7 +202,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                     });
 
             final AlertDialog alert = popup.create();
-            if(!mActivity.isFinishing() && !mActivity.isDestroyed() && !mImageUri.getPath().contains("Screenshots")){
+            if(!mActivity.isDestroyed() && !mActivity.isFinishing() && !mImageUri.getPath().contains("Screenshots")){
                 alert.show();
             }
         }
@@ -242,10 +247,8 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         }
     }//end of onPostExecute(String result)*/
 
-    private void handleNullResult(){
-        if(isOnline()){
-            new ImgurUploadTask(mImageUri, mActivity).execute();
-        }else{
+    private void handleFailedUpload(){
+        if(!mActivity.isDestroyed() && !mActivity.isFinishing() && !mImageUri.getPath().contains("Screenshots")){
             TextView title = new TextView(mActivity);
             title.setText("Image upload has failed :(");
             title.setGravity(Gravity.CENTER);
@@ -271,10 +274,9 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                     });
 
             final AlertDialog alert = popup.create();
-            if(!mActivity.isFinishing() && !mActivity.isDestroyed() && !mImageUri.getPath().contains("Screenshots")){
-                alert.show();
-            }
+            alert.show();
         }
+
         notiBuilder.setProgress(0, 0, false)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle("Image upload FAILED :(")
@@ -285,5 +287,6 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         mNotificationManager.cancel(0);
         mNotificationManager.notify(0, notiBuilder.build());
     }//end of handleNullResult()*/
+
 }//end of class
 

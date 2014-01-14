@@ -26,6 +26,7 @@ public class MyActivity extends Activity {
     private FileObserver observer;
 
     private boolean finishCalled = false;
+    private ImgurUploadTask uploadTask;
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -106,7 +107,9 @@ public class MyActivity extends Activity {
                 if ((event == FileObserver.CLOSE_WRITE))
                 {
                     Uri photoUri = Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/" + path));
-                    new ImgurUploadTask(photoUri, MyActivity.this).execute();
+//                    new ImgurUploadTask(photoUri, MyActivity.this).execute();
+                    uploadTask = new ImgurUploadTask(photoUri, MyActivity.this);
+                    uploadTask.execute();
                 }
             }
         };
@@ -124,6 +127,9 @@ public class MyActivity extends Activity {
         }
         if(!finishCalled){
             observer.stopWatching();
+        }
+        if(uploadTask != null){
+            uploadTask.cancel(true);
         }
     }//end of onDestroy()*/
 
