@@ -13,7 +13,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1f501df3-cb58-4ace-bc00-babd44950f02" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java" afterPath="$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurUploadTask.java" afterPath="$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurUploadTask.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="imgurCam.iws" />
@@ -78,10 +78,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MyActivity.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MyActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="14" selection-start="1453" selection-end="1453" vertical-scroll-proportion="0.63144964" vertical-offset="373" max-vertical-offset="2310">
+            <state line="39" column="17" selection-start="1306" selection-end="1306" vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="2310">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -89,16 +89,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImgurUploadTask.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ImgurUploadTask.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurUploadTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="210" column="13" selection-start="7553" selection-end="7553" vertical-scroll-proportion="-6.1923075" vertical-offset="2989" max-vertical-offset="4530">
+            <state line="70" column="5" selection-start="2363" selection-end="2363" vertical-scroll-proportion="0.5134474" vertical-offset="840" max-vertical-offset="4530">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#7022#7334#0" expanded="true" />
                 <element signature="e#7311#7312#0" expanded="true" />
-                <element signature="e#10273#10585#0" expanded="true" />
-                <element signature="e#10562#10563#0" expanded="true" />
+                <element signature="e#10197#10509#0" expanded="true" />
+                <element signature="e#10486#10487#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -125,8 +125,8 @@
         <option value="$PROJECT_DIR$/src/com/hulq/ImgurCam/MultipartPostHelper.java" />
         <option value="$PROJECT_DIR$/src/com/hulq/ImgurCam/ScreenshotService.java" />
         <option value="$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurUploadTask.java" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
       </list>
     </option>
   </component>
@@ -469,9 +469,9 @@
       <option name="MODE" value="specific_activity" />
       <option name="DEPLOY" value="true" />
       <option name="ARTIFACT_NAME" value="" />
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="TARGET_SELECTION_MODE" value="USB_DEVICE" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
-      <option name="PREFERRED_AVD" value="htc" />
+      <option name="PREFERRED_AVD" value="" />
       <option name="USE_COMMAND_LINE" value="true" />
       <option name="COMMAND_LINE" value="" />
       <option name="WIPE_USER_DATA" value="false" />
@@ -533,20 +533,20 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39889959" sideWeight="0.74848485" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39889959" sideWeight="0.7478873" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287483" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" x="373" y="289" width="693" height="261" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.31138545" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287483" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38376892" sideWeight="0.8239437" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38376892" sideWeight="0.8239437" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24647887" sideWeight="0.68861455" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38376892" sideWeight="0.17605634" order="2" side_tool="true" content_ui="tabs" x="20" y="300" width="1400" height="239" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39889959" sideWeight="0.25140846" order="2" side_tool="true" content_ui="tabs" x="20" y="300" width="1400" height="239" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -618,8 +618,8 @@
             <element signature="imports" expanded="true" />
             <element signature="e#7022#7334#0" expanded="true" />
             <element signature="e#7311#7312#0" expanded="true" />
-            <element signature="e#10273#10585#0" expanded="true" />
-            <element signature="e#10562#10563#0" expanded="true" />
+            <element signature="e#10197#10509#0" expanded="true" />
+            <element signature="e#10486#10487#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -853,32 +853,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="75" selection-start="591" selection-end="591" vertical-scroll-proportion="0.26978418" vertical-offset="0" max-vertical-offset="556">
+        <state line="18" column="27" selection-start="1079" selection-end="1079" vertical-scroll-proportion="0.55714285" vertical-offset="36" max-vertical-offset="465">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="17" selection-start="1306" selection-end="1306" vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="2310">
           <folding>
-            <element signature="e#834#852#0" expanded="true" />
-            <element signature="e#967#985#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurUploadTask.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="210" column="13" selection-start="7553" selection-end="7553" vertical-scroll-proportion="-6.1923075" vertical-offset="2989" max-vertical-offset="4530">
+        <state line="70" column="5" selection-start="2363" selection-end="2363" vertical-scroll-proportion="0.5134474" vertical-offset="840" max-vertical-offset="4530">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#7022#7334#0" expanded="true" />
             <element signature="e#7311#7312#0" expanded="true" />
-            <element signature="e#10273#10585#0" expanded="true" />
-            <element signature="e#10562#10563#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="14" selection-start="1453" selection-end="1453" vertical-scroll-proportion="0.63144964" vertical-offset="373" max-vertical-offset="2310">
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#10197#10509#0" expanded="true" />
+            <element signature="e#10486#10487#0" expanded="true" />
           </folding>
         </state>
       </provider>
