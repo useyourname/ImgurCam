@@ -111,10 +111,14 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                     sb.append(scanner.next());
                 }
                 Log.i(TAG, "error response: " + sb.toString());
+                Thread.sleep(5000);
                 return null;
             }
         } catch (Exception ex) {
             Log.e(TAG, "Error during POST", ex);
+            try{
+                Thread.sleep(5000);
+            }catch(InterruptedException i){}
             return null;
         } finally {
             try {
