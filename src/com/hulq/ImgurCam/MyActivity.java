@@ -10,6 +10,7 @@ import android.os.FileObserver;
 import android.widget.ImageView;
 import android.content.Intent;
 import java.io.IOException;
+import android.util.Log;
 import android.provider.MediaStore;
 import java.text.SimpleDateFormat;
 import android.net.Uri;
@@ -42,7 +43,12 @@ public class MyActivity extends Activity {
             );
             image.deleteOnExit();
         }catch(IOException ex){
-            System.out.println("createTempFile FAILED");
+            try{
+                image = File.createTempFile(imageFileName, ".jpg");
+            }catch(IOException i){
+                Log.e("Pic IOException", "createTempFile FAILED");
+                System.out.println("createTempFile FAILED");
+            }
         }
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = "file:" + image.getAbsolutePath();
@@ -107,7 +113,7 @@ public class MyActivity extends Activity {
                 if ((event == FileObserver.CLOSE_WRITE))
                 {
                     Uri photoUri = Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/" + path));
-//                    new ImgurUploadTask(photoUri, MyActivity.this).execute();
+//                    Uri photoUri = Uri.parse(photoFile.getParent());
                     uploadTask = new ImgurUploadTask(photoUri, MyActivity.this);
                     uploadTask.execute();
                 }
