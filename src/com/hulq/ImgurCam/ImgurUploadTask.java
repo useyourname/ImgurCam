@@ -22,12 +22,14 @@ import android.os.Build;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.content.Context;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import java.io.File;
 import android.view.Gravity;
 import android.content.Intent;
-import android.content.DialogInterface;
+import android.net.NetworkInfo;
 import android.app.Notification;
 import android.support.v4.app.NotificationCompat;
 import android.app.NotificationManager;
@@ -38,7 +40,6 @@ import android.widget.Toast;
 public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
     private static final String TAG = ImgurUploadTask.class.getSimpleName();
-
     private static final String UPLOAD_URL = "https://api.imgur.com/3/image";
 
     private Activity mActivity;
@@ -65,7 +66,17 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         notiBuilder.setProgress(0, 0, true);
         // Issues the notification
         mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.cancel(0);
         mNotificationManager.notify(0, notiBuilder.build());
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) mActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -152,6 +163,11 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String result){
+        if(result == null || result.isEmpty()){
+            handleNullResult();
+            return;
+        }
+
         ClipboardManager clipboard = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
         clipboard.setPrimaryClip(ClipData.newPlainText("Imgur URL", "imgur.com/" + result));
 
@@ -212,6 +228,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         }
 
         mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.cancel(0);
         mNotificationManager.notify(0, notiBuilder.build());
 
         //Toast
@@ -225,5 +242,48 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         }
     }//end of onPostExecute(String result)*/
 
+    private void handleNullResult(){
+        if(isOnline()){
+            new ImgurUploadTask(mImageUri, mActivity).execute();
+        }else{
+            TextView title = new TextView(mActivity);
+            title.setText("Image upload has failed :(");
+            title.setGravity(Gravity.CENTER);
+            title.setTextSize(25.f);
+            title.setTextColor(Color.CYAN);
+
+            TextView body = new TextView(mActivity);
+            body.setText("\nCheck your network connection!");
+            body.setGravity(Gravity.CENTER);
+            body.setTextIsSelectable(false);
+
+            Builder popup = new AlertDialog.Builder(mActivity);
+            popup.setCustomTitle(title);
+            popup.setView(body);
+            popup.setCancelable(false);
+            popup.setPositiveButton(android.R.string.ok,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                            dialog.cancel();
+                            mActivity.recreate();
+                        }
+                    });
+
+            final AlertDialog alert = popup.create();
+            if(!mActivity.isFinishing() && !mActivity.isDestroyed() && !mImageUri.getPath().contains("Screenshots")){
+                alert.show();
+            }
+        }
+        notiBuilder.setProgress(0, 0, false)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle("Image upload FAILED :(")
+                .setContentText("Please check your network connection")
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setAutoCancel(true);
+        mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.cancel(0);
+        mNotificationManager.notify(0, notiBuilder.build());
+    }//end of handleNullResult()*/
 }//end of class
 
