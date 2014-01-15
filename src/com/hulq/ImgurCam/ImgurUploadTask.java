@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONObject;
 import java.io.IOException;
@@ -103,19 +102,16 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                 return onInput(responseIn);
             }
             else {
-                Log.i(TAG, "responseCode=" + conn.getResponseCode());
                 responseIn = conn.getErrorStream();
                 StringBuilder sb = new StringBuilder();
                 Scanner scanner = new Scanner(responseIn);
                 while (scanner.hasNext()) {
                     sb.append(scanner.next());
                 }
-                Log.i(TAG, "error response: " + sb.toString());
                 Thread.sleep(5000);
                 return null;
             }
         } catch (Exception ex) {
-            Log.e(TAG, "Error during POST", ex);
             try{
                 Thread.sleep(5000);
             }catch(InterruptedException i){}
@@ -152,7 +148,6 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         String id = root.getJSONObject("data").getString("id");
 
         String deletehash = root.getJSONObject("data").getString("deletehash");
-        Log.i(TAG, "new imgur url: http://imgur.com/" + id + " (delete hash: " + deletehash + ")");
         return id;
     }//end of onInput(InputStream)
 

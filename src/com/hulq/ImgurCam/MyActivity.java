@@ -10,7 +10,6 @@ import android.os.FileObserver;
 import android.widget.ImageView;
 import android.content.Intent;
 import java.io.IOException;
-import android.util.Log;
 import android.provider.MediaStore;
 import java.text.SimpleDateFormat;
 import android.net.Uri;
@@ -42,7 +41,6 @@ public class MyActivity extends Activity {
             );
             image.deleteOnExit();
         }catch(IOException ex){
-            Log.e("Pic IOException", "createTempFile FAILED");
             System.out.println("createTempFile FAILED");
         }
         // Save a file: path for use with ACTION_VIEW intents
