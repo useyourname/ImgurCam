@@ -26,7 +26,6 @@ public class MyActivity extends Activity {
     private File photoFile;
     private FileObserver observer;
 
-    private boolean finishCalled = false;
     private ImgurUploadTask uploadTask;
 
     private File createImageFile() throws IOException {
@@ -80,13 +79,13 @@ public class MyActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) {
             photoFile.delete();
-            finishCalled = true;
             finish();
         } else {
             Uri photoUri = Uri.parse(currentPhotoPath);
             imageView.setImageURI(photoUri);
 //            galleryAddPic();
-            new ImgurUploadTask(photoUri, this).execute();
+            uploadTask = new ImgurUploadTask(photoUri, this);
+            uploadTask.execute();
         }
     }//end of onActivityResult(int requestCode, int resultCode, Intent data)*/
 
@@ -111,20 +110,20 @@ public class MyActivity extends Activity {
                 if(file.getName().contains("imgurCam")) file.delete();
         }
 
-        this.observer = new FileObserver(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/")
+        observer = new FileObserver(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/")
         {
             public void onEvent(int event, String path)
             {
                 if ((event == FileObserver.CLOSE_WRITE))
                 {
                     Uri photoUri = Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/" + path));
-//                    Uri photoUri = Uri.parse(photoFile.getParent());
                     uploadTask = new ImgurUploadTask(photoUri, MyActivity.this);
                     uploadTask.execute();
                 }
             }
         };
         this.observer.startWatching();
+        ((ImgurCamApplication)this.getApplication()).setObserver(observer);
 
         dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
         imageView = (ImageView) findViewById(R.id.imageView1);
@@ -132,22 +131,17 @@ public class MyActivity extends Activity {
 
     @Override
     protected void onDestroy(){
+        Log.d("onDestroy", "onDestroy called from MyActivity");
         super.onDestroy();
         if(photoFile.exists() && !currentPhotoPath.contains("Screenshots")){
             photoFile.delete();
-        }
-        if(!finishCalled){
-            observer.stopWatching();
+            Log.d("onDestroy", "photofile deleted from onDestroy");
         }
         if(uploadTask != null){
             uploadTask.cancel(true);
+            Log.d("onDestroy", "asynctask destroyed in onDestroy");
         }
     }//end of onDestroy()*/
-
-    protected void onRestart(){
-        super.onRestart();
-        finishCalled = false;
-    }//end of onRestart()
 }//end of MyActivity class*/
 
 
