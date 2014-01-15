@@ -32,7 +32,6 @@ public class MyActivity extends Activity {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "imgurCam_" + timeStamp;
-//        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File storageDir = this.getExternalCacheDir();
         File image = null;
         try{
@@ -110,7 +109,16 @@ public class MyActivity extends Activity {
                 if(file.getName().contains("imgurCam")) file.delete();
         }
 
-        observer = new FileObserver(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/")
+        observer = createObserver();
+        this.observer.startWatching();
+        ((ImgurCamApplication)this.getApplication()).setObserver(observer);
+
+        dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
+        imageView = (ImageView) findViewById(R.id.imageView1);
+    }//end of onCreate(Bundle savedInstanceState)*/
+
+    private FileObserver createObserver(){
+        return new FileObserver(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/")
         {
             public void onEvent(int event, String path)
             {
@@ -122,26 +130,7 @@ public class MyActivity extends Activity {
                 }
             }
         };
-        this.observer.startWatching();
-        ((ImgurCamApplication)this.getApplication()).setObserver(observer);
-
-        dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
-        imageView = (ImageView) findViewById(R.id.imageView1);
-    }//end of onCreate(Bundle savedInstanceState)*/
-
-    @Override
-    protected void onDestroy(){
-        Log.d("onDestroy", "onDestroy called from MyActivity");
-        super.onDestroy();
-        if(photoFile.exists() && !currentPhotoPath.contains("Screenshots")){
-            photoFile.delete();
-            Log.d("onDestroy", "photofile deleted from onDestroy");
-        }
-        if(uploadTask != null){
-            uploadTask.cancel(true);
-            Log.d("onDestroy", "asynctask destroyed in onDestroy");
-        }
-    }//end of onDestroy()*/
+    }
 }//end of MyActivity class*/
 
 

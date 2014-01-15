@@ -1,5 +1,6 @@
 package com.hulq.ImgurCam;
 
+
 import android.app.Application;
 import android.os.FileObserver;
 
@@ -17,5 +18,6 @@ public class ImgurCamApplication extends Application {
 
     public void setObserver(FileObserver observer){
         this.observer = observer;
+        observer.startWatching();
     }
 }//end of ImgurCamApplication

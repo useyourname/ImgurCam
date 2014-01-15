@@ -157,16 +157,6 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
     }//end of onInput(InputStream)
 
     @Override
-    protected void onCancelled(String result){
-        File toBeDeleted = new File(mImageUri.getPath());
-        if(toBeDeleted.exists() && !mImageUri.getPath().contains("Screenshots")){
-            toBeDeleted.delete();
-        }
-        mNotificationManager.cancel(0);
-        handleFailedUpload();
-    }//end of onCancelled
-
-    @Override
     protected void onPostExecute(String result){
         if(result == null || result.isEmpty()){
             if(isOnline()){
@@ -206,7 +196,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                     });
 
             final AlertDialog alert = popup.create();
-            if(!isCancelled() && !mImageUri.getPath().contains("Screenshots")){
+            if(!mActivity.isFinishing() && !mImageUri.getPath().contains("Screenshots")){
                 alert.show();
             }
         }
@@ -252,7 +242,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
     }//end of onPostExecute(String result)*/
 
     private void handleFailedUpload(){
-        if(!isCancelled() && !mImageUri.getPath().contains("Screenshots")){
+        if(!mActivity.isFinishing() && !mImageUri.getPath().contains("Screenshots")){
             TextView title = new TextView(mActivity);
             title.setText("Image upload has failed :(");
             title.setGravity(Gravity.CENTER);
