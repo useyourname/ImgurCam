@@ -33,7 +33,8 @@ public class MyActivity extends Activity {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "imgurCam_" + timeStamp;
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+//        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File storageDir = this.getExternalCacheDir();
         File image = null;
         try{
             image = File.createTempFile(
@@ -43,12 +44,8 @@ public class MyActivity extends Activity {
             );
             image.deleteOnExit();
         }catch(IOException ex){
-            try{
-                image = File.createTempFile(imageFileName, ".jpg");
-            }catch(IOException i){
-                Log.e("Pic IOException", "createTempFile FAILED");
-                System.out.println("createTempFile FAILED");
-            }
+            Log.e("Pic IOException", "createTempFile FAILED");
+            System.out.println("createTempFile FAILED");
         }
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = "file:" + image.getAbsolutePath();
@@ -105,6 +102,14 @@ public class MyActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        //delete files in cache
+        File cacheDir = this.getExternalCacheDir();
+        File[] files = cacheDir.listFiles();
+        if (files != null) {
+            for (File file : files)
+                if(file.getName().contains("imgurCam")) file.delete();
+        }
 
         this.observer = new FileObserver(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/")
         {
