@@ -1,6 +1,8 @@
 package com.hulq.ImgurCam;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.content.res.Configuration;
 import java.util.Date;
@@ -50,6 +52,34 @@ public class MyActivity extends Activity {
         return image;
     }//end of createImageFile()*/
 
+    private FileObserver createObserver(){
+        return new FileObserver(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/")
+        {
+            public void onEvent(int event, String path)
+            {
+                if ((event == FileObserver.CLOSE_WRITE))
+                {
+                    Uri photoUri = Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/" + path));
+                    uploadTask = new ImgurUploadTask(photoUri, MyActivity.this);
+                    uploadTask.execute();
+                }
+            }
+        };
+    }//end of createObserver()
+
+    private Bitmap decodeFile(){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(Uri.parse(currentPhotoPath).getPath(), options);
+        options.inJustDecodeBounds = false;
+        options.inScaled = true;
+        options.inDensity = options.outWidth;
+        options.inTargetDensity = getResources().getDisplayMetrics().densityDpi;
+        Bitmap bm = BitmapFactory.decodeFile(Uri.parse(currentPhotoPath).getPath(), options);
+        Log.d("Bitmap size", "Bitmap size: " + bm.getByteCount());
+        return bm;
+    }
+
     private void dispatchTakePictureIntent(int actionCode) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -81,8 +111,7 @@ public class MyActivity extends Activity {
             finish();
         } else {
             Uri photoUri = Uri.parse(currentPhotoPath);
-            imageView.setImageURI(photoUri);
-//            galleryAddPic();
+            imageView.setImageBitmap(decodeFile());
             uploadTask = new ImgurUploadTask(photoUri, this);
             uploadTask.execute();
         }
@@ -113,24 +142,9 @@ public class MyActivity extends Activity {
         this.observer.startWatching();
         ((ImgurCamApplication)this.getApplication()).setObserver(observer);
 
-        dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
         imageView = (ImageView) findViewById(R.id.imageView1);
+        dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);
     }//end of onCreate(Bundle savedInstanceState)*/
-
-    private FileObserver createObserver(){
-        return new FileObserver(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/")
-        {
-            public void onEvent(int event, String path)
-            {
-                if ((event == FileObserver.CLOSE_WRITE))
-                {
-                    Uri photoUri = Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/" + path));
-                    uploadTask = new ImgurUploadTask(photoUri, MyActivity.this);
-                    uploadTask.execute();
-                }
-            }
-        };
-    }
 }//end of MyActivity class*/
 
 
