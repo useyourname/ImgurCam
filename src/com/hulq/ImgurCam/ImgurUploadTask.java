@@ -53,12 +53,27 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         this.mActivity = activity;
     }
 
+    private double getMegaPixels(){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mImageUri.getPath(), options);
+        return (options.outHeight * options.outWidth) / 1024000.0;
+    }//end of getCameraMegaPixels
+
     private Bitmap getResizedBitmap(Uri mImageUri) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(mImageUri.getPath(), options);
         Log.d("[BITMAP]", "Original width : " + options.outWidth + ", and height : " + options.outHeight);
-        options.inSampleSize = 4;
+        int megaPixels = (int) Math.ceil(getMegaPixels());
+        Log.d("[BITMAP]","megapixels: " + megaPixels);
+        if(megaPixels >= 8){
+            options.inSampleSize = 4;
+            Log.d("[BITMAP]","insamplesize: 4");
+        }else{
+            options.inSampleSize = 2;
+            Log.d("[BITMAP]","insamplesize: 2");
+        }
         options.inJustDecodeBounds = false;
         Bitmap bm = BitmapFactory.decodeFile(mImageUri.getPath(), options);
         Log.d("[BITMAP]", "bitmap size: " + bm.getByteCount());
@@ -81,7 +96,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         mNotificationManager.notify(0, notiBuilder.build());
     }
 
-    public boolean isOnline() {
+    public boolean isConnectedOrConnecting() {
         ConnectivityManager cm = (ConnectivityManager) mActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isConnectedOrConnecting()) {
