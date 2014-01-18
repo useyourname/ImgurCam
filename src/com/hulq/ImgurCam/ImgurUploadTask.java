@@ -107,6 +107,8 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.flush();
             out.close();
+            bitmap.recycle();
+            bitmap = null;
 
             if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 responseIn = conn.getInputStream();
@@ -121,14 +123,10 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                     sb.append(scanner.next());
                 }
                 Log.i(TAG, "error response: " + sb.toString());
-                Thread.sleep(5000);
                 return null;
             }
         } catch (Exception ex) {
             Log.e(TAG, "Error during POST", ex);
-            try{
-                Thread.sleep(5000);
-            }catch(InterruptedException i){}
             return null;
         } finally {
             try {
@@ -169,11 +167,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String result){
         if(result == null || result.isEmpty()){
-            if(isOnline()){
-                new ImgurUploadTask(mImageUri, mActivity).execute();
-            }else{
-                handleFailedUpload();
-            }
+            handleFailedUpload();
             return;
         }
 
@@ -196,7 +190,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             popup.setCustomTitle(title);
             popup.setView(url);
             popup.setCancelable(false);
-            popup.setPositiveButton(android.R.string.ok,
+            popup.setPositiveButton("New Picture",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
@@ -267,12 +261,20 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             popup.setCustomTitle(title);
             popup.setView(body);
             popup.setCancelable(false);
-            popup.setPositiveButton(android.R.string.ok,
+            popup.setPositiveButton("New Picture",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
                             dialog.cancel();
                             mActivity.recreate();
+                        }
+                    });
+            popup.setNegativeButton("Retry Upload",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //dismiss the dialog
+                            dialog.cancel();
+                            new ImgurUploadTask(mImageUri, mActivity).execute();
                         }
                     });
 
