@@ -9,6 +9,7 @@ import java.util.Date;
 import android.os.Environment;
 import java.io.File;
 import android.os.FileObserver;
+import android.util.DisplayMetrics;
 import android.widget.ImageView;
 import android.content.Intent;
 import java.io.IOException;
@@ -29,6 +30,7 @@ public class MyActivity extends Activity {
     private FileObserver observer;
 
     private ImgurUploadTask uploadTask;
+    public Bitmap bImage;
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -67,16 +69,17 @@ public class MyActivity extends Activity {
         };
     }//end of createObserver()
 
-    private Bitmap decodeFile(){
+    public Bitmap decodeFile(Uri mImageUri){
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(Uri.parse(currentPhotoPath).getPath(), options);
+        BitmapFactory.decodeFile(mImageUri.getPath(), options);
         options.inJustDecodeBounds = false;
         options.inScaled = true;
         options.inDensity = options.outWidth;
-        options.inTargetDensity = getResources().getDisplayMetrics().densityDpi;
-        Bitmap bm = BitmapFactory.decodeFile(Uri.parse(currentPhotoPath).getPath(), options);
-        Log.d("Bitmap size", "Bitmap size: " + bm.getByteCount());
+        options.inTargetDensity = displayMetrics.densityDpi;
+        Bitmap bm = BitmapFactory.decodeFile(mImageUri.getPath(), options);
+//        Log.d("Bitmap size", "Bitmap size: " + bm.getByteCount());
         return bm;
     }
 
@@ -111,7 +114,8 @@ public class MyActivity extends Activity {
             finish();
         } else {
             Uri photoUri = Uri.parse(currentPhotoPath);
-            imageView.setImageBitmap(decodeFile());
+            bImage = decodeFile(photoUri);
+            imageView.setImageBitmap(bImage);
             uploadTask = new ImgurUploadTask(photoUri, this);
             uploadTask.execute();
         }

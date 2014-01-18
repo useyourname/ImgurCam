@@ -44,7 +44,6 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
     private Activity mActivity;
     private Uri mImageUri;  // local Uri to upload
-    private Bitmap bImage;
 
     private NotificationCompat.Builder notiBuilder;
     private NotificationManager mNotificationManager;
@@ -52,6 +51,18 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
     public ImgurUploadTask(Uri imageUri, Activity activity) {
         this.mImageUri = imageUri;
         this.mActivity = activity;
+    }
+
+    private Bitmap getResizedBitmap(Uri mImageUri) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mImageUri.getPath(), options);
+        Log.d("[BITMAP]", "Original width : " + options.outWidth + ", and height : " + options.outHeight);
+        options.inSampleSize = 4;
+        options.inJustDecodeBounds = false;
+        Bitmap bm = BitmapFactory.decodeFile(mImageUri.getPath(), options);
+        Log.d("[BITMAP]", "bitmap size: " + bm.getByteCount());
+        return bm;
     }
 
     @Override
@@ -84,8 +95,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         HttpURLConnection conn = null;
         InputStream responseIn = null;
 
-        Bitmap bitmap = BitmapFactory.decodeFile(mImageUri.getPath());
-
+        Bitmap bitmap = getResizedBitmap(mImageUri);
         try {
             conn = (HttpURLConnection) new URL(UPLOAD_URL).openConnection();
             conn.setDoOutput(true);
@@ -94,7 +104,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             ImgurAuthorization.getInstance(mActivity).addToHttpURLConnection(conn);
 
             OutputStream out = conn.getOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, out);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.flush();
             out.close();
 
@@ -218,11 +228,10 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             .setContentIntent(pIntent);
 
         if(Build.VERSION.SDK_INT >= 16){
-            bImage = BitmapFactory.decodeFile(mImageUri.getPath());
             NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
             bigPictureStyle.setBigContentTitle("Image URL copied");
             bigPictureStyle.setSummaryText("imgur.com/" + result);
-            bigPictureStyle.bigPicture(bImage);
+            bigPictureStyle.bigPicture( ((MyActivity)mActivity).bImage);
             notiBuilder.setStyle(bigPictureStyle);
         }
 
