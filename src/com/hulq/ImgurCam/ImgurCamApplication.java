@@ -3,6 +3,7 @@ package com.hulq.ImgurCam;
 
 import android.app.Application;
 import android.os.FileObserver;
+import android.content.Context;
 
 /**
  * Created by raianhuq on 2014-01-14.
@@ -10,14 +11,20 @@ import android.os.FileObserver;
 public class ImgurCamApplication extends Application {
 
     private FileObserver observer;
+    private static Context context;
 
     @Override
     public void onCreate(){
         super.onCreate();
+        ImgurCamApplication.context = getApplicationContext();
     }//end of onCreate()
 
     public void setObserver(FileObserver observer){
         this.observer = observer;
         observer.startWatching();
+    }
+
+    public static Context getAppContext() {
+        return ImgurCamApplication.context;
     }
 }//end of ImgurCamApplication

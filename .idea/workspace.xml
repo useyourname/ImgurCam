@@ -12,7 +12,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1f501df3-cb58-4ace-bc00-babd44950f02" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurCamApplication.java" afterPath="$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurCamApplication.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurUploadTask.java" afterPath="$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurUploadTask.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java" afterPath="$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="imgurCam.iws" />
@@ -80,20 +82,45 @@
       <file leaf-file-name="MyActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="41" selection-start="1468" selection-end="1468" vertical-scroll-proportion="0.0" vertical-offset="278" max-vertical-offset="2160">
-              <folding />
+            <state line="63" column="21" selection-start="2192" selection-end="2192" vertical-scroll-proportion="-6.9615383" vertical-offset="764" max-vertical-offset="2505">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImgurUploadTask.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurUploadTask.java">
+      <file leaf-file-name="ScreenShotService.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/ScreenShotService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="76" column="43" selection-start="2692" selection-end="2692" vertical-scroll-proportion="0.7648579" vertical-offset="844" max-vertical-offset="4350">
+            <state line="42" column="52" selection-start="1759" selection-end="1759" vertical-scroll-proportion="0.7383721" vertical-offset="376" max-vertical-offset="810">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#copy#0;class#ImgurUploadTask#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImgurUploadTask.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurUploadTask.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="271" column="53" selection-start="10494" selection-end="10494" vertical-scroll-proportion="0.0" vertical-offset="3719" max-vertical-offset="4575">
+              <folding>
+                <element signature="imports" expanded="true" />
                 <element signature="method#onInput#0;class#ImgurUploadTask#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImgurCamApplication.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurCamApplication.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="27" column="43" selection-start="671" selection-end="671" vertical-scroll-proportion="0.0" vertical-offset="123" max-vertical-offset="540">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#626#627#0" expanded="true" />
+                <element signature="e#676#677#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -118,11 +145,12 @@
         <option value="$PROJECT_DIR$/src/com/hulq/ImgurCam/ProgressOutputStream.java" />
         <option value="$PROJECT_DIR$/src/com/hulq/ImgurCam/MultipartPostHelper.java" />
         <option value="$PROJECT_DIR$/src/com/hulq/ImgurCam/ScreenshotService.java" />
-        <option value="$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurCamApplication.java" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/res/layout/main.xml" />
         <option value="$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurUploadTask.java" />
+        <option value="$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurCamApplication.java" />
+        <option value="$PROJECT_DIR$/src/com/hulq/ImgurCam/ScreenShotService.java" />
       </list>
     </option>
   </component>
@@ -158,6 +186,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -242,8 +272,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -539,14 +567,14 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328125" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.41051137" sideWeight="0.83309144" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.453125" sideWeight="0.83309144" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24600871" sideWeight="0.68861455" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.017045455" sideWeight="0.16690856" order="2" side_tool="true" content_ui="tabs" x="20" y="300" width="1400" height="239" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.453125" sideWeight="0.16690856" order="2" side_tool="true" content_ui="tabs" x="20" y="300" width="1400" height="239" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3280116" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -580,17 +608,11 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/app/Activity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5319" column="0" selection-start="224270" selection-end="224270" vertical-scroll-proportion="0.0" vertical-offset="79785" max-vertical-offset="82095" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurUploadTask.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="125" column="58" selection-start="3997" selection-end="3997" vertical-scroll-proportion="0.0" vertical-offset="1640" max-vertical-offset="2040">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#copy#0;class#ImgurUploadTask#0" expanded="false" />
             <element signature="method#onInput#0;class#ImgurUploadTask#0" expanded="false" />
           </folding>
         </state>
@@ -611,7 +633,9 @@
     <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="16" column="32" selection-start="488" selection-end="488" vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="1650">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -772,22 +796,6 @@
         <state line="775" column="0" selection-start="26779" selection-end="26779" vertical-scroll-proportion="0.55764073" vertical-offset="10757" max-vertical-offset="11325" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurCamApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="13" selection-start="245" selection-end="245" vertical-scroll-proportion="0.33505154" vertical-offset="0" max-vertical-offset="582">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="13" selection-start="773" selection-end="773" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="465">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/android/app/Instrumentation.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1097" column="0" selection-start="42027" selection-end="42027" vertical-scroll-proportion="0.0" vertical-offset="15408" max-vertical-offset="26025" />
@@ -836,13 +844,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="22" selection-start="351" selection-end="351" vertical-scroll-proportion="0.23575638" vertical-offset="0" max-vertical-offset="509">
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../android-sdk-macosx/sources/android-19/com/android/server/wm/WindowManagerService.java">
@@ -850,20 +858,48 @@
         <state line="7639" column="0" selection-start="324238" selection-end="324238" vertical-scroll-proportion="0.33333334" vertical-offset="111962" max-vertical-offset="160365" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java">
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="41" selection-start="1468" selection-end="1468" vertical-scroll-proportion="0.0" vertical-offset="278" max-vertical-offset="2160">
+        <state line="14" column="122" selection-start="952" selection-end="952" vertical-scroll-proportion="0.44585988" vertical-offset="0" max-vertical-offset="471">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurCamApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="43" selection-start="671" selection-end="671" vertical-scroll-proportion="0.0" vertical-offset="123" max-vertical-offset="540">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#626#627#0" expanded="true" />
+            <element signature="e#676#677#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/ImgurUploadTask.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="43" selection-start="2692" selection-end="2692" vertical-scroll-proportion="0.7648579" vertical-offset="844" max-vertical-offset="4350">
+        <state line="271" column="53" selection-start="10494" selection-end="10494" vertical-scroll-proportion="0.0" vertical-offset="3719" max-vertical-offset="4575">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#copy#0;class#ImgurUploadTask#0" expanded="false" />
             <element signature="method#onInput#0;class#ImgurUploadTask#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/MyActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="21" selection-start="2192" selection-end="2192" vertical-scroll-proportion="-6.9615383" vertical-offset="764" max-vertical-offset="2505">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/hulq/ImgurCam/ScreenShotService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="52" selection-start="1759" selection-end="1759" vertical-scroll-proportion="0.7383721" vertical-offset="376" max-vertical-offset="810">
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

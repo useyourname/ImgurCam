@@ -18,6 +18,8 @@ import android.provider.MediaStore;
 import java.text.SimpleDateFormat;
 import android.net.Uri;
 
+import android.app.ActivityManager;
+
 public class MyActivity extends Activity {
 
     private static final int ACTION_TAKE_PHOTO_B = 1;
@@ -132,6 +134,11 @@ public class MyActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        int memoryClass = am.getMemoryClass();
+        Log.v("onCreate", "memoryClass:" + Integer.toString(memoryClass));
+
         setContentView(R.layout.main);
 
         //delete files in cache

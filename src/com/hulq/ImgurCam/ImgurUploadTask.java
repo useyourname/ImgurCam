@@ -47,6 +47,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
     private NotificationCompat.Builder notiBuilder;
     private NotificationManager mNotificationManager;
+    private boolean screenshot;
 
     public ImgurUploadTask(Uri imageUri, Activity activity) {
         this.mImageUri = imageUri;
@@ -58,31 +59,27 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(mImageUri.getPath(), options);
         return (options.outHeight * options.outWidth) / 1024000.0;
-    }//end of getCameraMegaPixels
+    }//end of getMegaPixels
 
-    private Bitmap getResizedBitmap(Uri mImageUri) {
+    private Bitmap getResizedBitmap(Uri mImageUri){
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(mImageUri.getPath(), options);
         Log.d("[BITMAP]", "Original width : " + options.outWidth + ", and height : " + options.outHeight);
         int megaPixels = (int) Math.ceil(getMegaPixels());
         Log.d("[BITMAP]","megapixels: " + megaPixels);
-        if(megaPixels >= 8){
-            options.inSampleSize = 4;
-            Log.d("[BITMAP]","insamplesize: 4");
-        }else{
-            options.inSampleSize = 2;
-            Log.d("[BITMAP]","insamplesize: 2");
-        }
+        options.inSampleSize = (screenshot) ? 1 : 2;
+        Log.d("[BITMAP]","insamplesize: " + options.inSampleSize);
         options.inJustDecodeBounds = false;
         Bitmap bm = BitmapFactory.decodeFile(mImageUri.getPath(), options);
         Log.d("[BITMAP]", "bitmap size: " + bm.getByteCount());
         return bm;
-    }
+    }//end of getResizedBitmap(Uri)
 
     @Override
     protected void onPreExecute(){
         super.onPreExecute();
+        if(mImageUri.getPath().contains("Screenshot"))screenshot = true;
 
         notiBuilder = new NotificationCompat.Builder(mActivity);
         notiBuilder.setContentTitle("Picture Upload")
@@ -111,6 +108,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         InputStream responseIn = null;
 
         Bitmap bitmap = getResizedBitmap(mImageUri);
+
         try {
             conn = (HttpURLConnection) new URL(UPLOAD_URL).openConnection();
             conn.setDoOutput(true);
@@ -119,11 +117,12 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             ImgurAuthorization.getInstance(mActivity).addToHttpURLConnection(conn);
 
             OutputStream out = conn.getOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
             out.flush();
             out.close();
             bitmap.recycle();
             bitmap = null;
+            System.gc();
 
             if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 responseIn = conn.getInputStream();
@@ -189,21 +188,24 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         ClipboardManager clipboard = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
         clipboard.setPrimaryClip(ClipData.newPlainText("Imgur URL", "imgur.com/" + result));
 
-        if(!mImageUri.getPath().contains("Screenshots")){
+        if(!screenshot){
             TextView title = new TextView(mActivity);
             title.setText("URL has been copied");
             title.setGravity(Gravity.CENTER);
             title.setTextSize(25.f);
-            title.setTextColor(Color.CYAN);
+            title.setTextColor(Color.parseColor("#33b5e5"));
 
             TextView url = new TextView(mActivity);
-            url.setText("\nimgur.com/" + result);
+            url.setText("imgur.com/" + result);
             url.setGravity(Gravity.CENTER);
             url.setTextIsSelectable(true);
+            url.setPadding(0, 50, 0, 50);
+            url.setTextSize(18);
 
             Builder popup = new AlertDialog.Builder(mActivity);
             popup.setCustomTitle(title);
             popup.setView(url);
+//            popup.setMessage("imgur.com/" + result);
             popup.setCancelable(false);
             popup.setPositiveButton("New Picture",
                     new DialogInterface.OnClickListener() {
@@ -215,7 +217,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                     });
 
             final AlertDialog alert = popup.create();
-            if(!mActivity.isFinishing() && !mImageUri.getPath().contains("Screenshots")){
+            if(!mActivity.isFinishing() && !screenshot){
                 alert.show();
             }
         }
@@ -240,7 +242,9 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
             bigPictureStyle.setBigContentTitle("Image URL copied");
             bigPictureStyle.setSummaryText("imgur.com/" + result);
-            bigPictureStyle.bigPicture( ((MyActivity)mActivity).bImage);
+            bigPictureStyle.bigPicture((screenshot) ?
+                    ((MyActivity)mActivity).decodeFile(mImageUri) :
+                    ((MyActivity)mActivity).bImage);
             notiBuilder.setStyle(bigPictureStyle);
         }
 
@@ -254,23 +258,25 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
         //delete picture
         File toBeDeleted = new File(mImageUri.getPath());
-        if(toBeDeleted.exists() && !mImageUri.getPath().contains("Screenshots")){
+        if(toBeDeleted.exists() && !screenshot){
             toBeDeleted.delete();
         }
     }//end of onPostExecute(String result)*/
 
     private void handleFailedUpload(){
-        if(!mActivity.isFinishing() && !mImageUri.getPath().contains("Screenshots")){
+        if(!mActivity.isFinishing() && !screenshot){
             TextView title = new TextView(mActivity);
             title.setText("Image upload has failed :(");
             title.setGravity(Gravity.CENTER);
             title.setTextSize(25.f);
-            title.setTextColor(Color.CYAN);
+            title.setTextColor(Color.parseColor("#33b5e5"));
 
             TextView body = new TextView(mActivity);
-            body.setText("\nCheck your network connection!");
+            body.setText("Check your network connection!");
             body.setGravity(Gravity.CENTER);
             body.setTextIsSelectable(false);
+            body.setTextSize(18);
+            body.setPadding(0, 50, 0, 50);
 
             Builder popup = new AlertDialog.Builder(mActivity);
             popup.setCustomTitle(title);
