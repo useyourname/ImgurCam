@@ -56,7 +56,7 @@ public class MyActivity extends Activity {
         return image;
     }//end of createImageFile()*/
 
-    private FileObserver createObserver(){
+    /*private FileObserver createObserver(){
         return new FileObserver(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/")
         {
             public void onEvent(int event, String path)
@@ -69,7 +69,7 @@ public class MyActivity extends Activity {
                 }
             }
         };
-    }//end of createObserver()
+    }//end of createObserver()*/
 
     public Bitmap decodeFile(Uri mImageUri){
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
@@ -149,9 +149,9 @@ public class MyActivity extends Activity {
                 if(file.getName().contains("imgurCam")) file.delete();
         }
 
-        observer = createObserver();
-        this.observer.startWatching();
-        ((ImgurCamApplication)this.getApplication()).setObserver(observer);
+//        observer = createObserver();
+//        this.observer.startWatching();
+//        ((ImgurCamApplication)this.getApplication()).setObserver(observer);
 
         imageView = (ImageView) findViewById(R.id.imageView1);
         dispatchTakePictureIntent(ACTION_TAKE_PHOTO_B);

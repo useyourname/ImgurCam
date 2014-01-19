@@ -2,6 +2,7 @@ package com.hulq.ImgurCam;
 
 
 import android.app.Application;
+import android.content.Intent;
 import android.os.FileObserver;
 import android.content.Context;
 
@@ -17,6 +18,7 @@ public class ImgurCamApplication extends Application {
     public void onCreate(){
         super.onCreate();
         ImgurCamApplication.context = getApplicationContext();
+        startService(new Intent(this, ScreenshotService.class));
     }//end of onCreate()
 
     public void setObserver(FileObserver observer){

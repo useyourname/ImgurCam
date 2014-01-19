@@ -27,22 +27,23 @@ public class ScreenshotService extends Service{
     public void onCreate()
     {
         Log.d("Screenshot", "ScreenShotListenerStarted");
-        startForeground(1, new Notification());
+//        startForeground(0, new Notification());
         this.fileObserver = new FileObserver(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/")
         {
             public void onEvent(int event, String path)
             {
                 Log.d("Screenshot", "new screenshot " + path);
-//                Intent localIntent = new Intent(ScreenshotListener.this, Upload.class);
-//                localIntent.setAction("android.intent.action.SEND");
-//                localIntent.putExtra("nickelme.PuushForAndroid.IsFromApp", true);
-//                localIntent.putExtra("android.intent.extra.STREAM", Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/" + paramAnonymousString)));
-//                localIntent.addFlags(268435456);
-//                ScreenshotService.this.startService(localIntent);
                 Uri photoUri = Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/" + path));
                 new ImgurUploadTask(photoUri, (Activity)ImgurCamApplication.getAppContext()).execute();
+                Log.d("screenshot", "screenshot upload");
             }
         };
         this.fileObserver.startWatching();
+    }//end of onCreate()
+
+    public int onStartCommand(Intent intent, int flags, int startId)
+    {
+        return START_STICKY;
     }
-}
+}//end of ScreenshotService
+
