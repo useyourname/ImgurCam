@@ -96,10 +96,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
     public boolean isConnectedOrConnecting() {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        }
-        return false;
+        return ( (netInfo != null) && netInfo.isConnectedOrConnecting() );
     }
 
     @Override
@@ -205,14 +202,13 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             Builder popup = new AlertDialog.Builder(context);
             popup.setCustomTitle(title);
             popup.setView(url);
-//            popup.setMessage("imgur.com/" + result);
             popup.setCancelable(false);
             popup.setPositiveButton("New Picture",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            //dismiss the dialog
-                            dialog.cancel();
-                            ((Activity)context).recreate();
+                        //dismiss the dialog
+                        dialog.cancel();
+                        ((Activity)context).recreate();
                         }
                     });
 
