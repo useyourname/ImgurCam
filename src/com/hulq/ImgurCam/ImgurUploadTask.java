@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONObject;
 import java.io.IOException;
@@ -65,14 +64,10 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(mImageUri.getPath(), options);
-        Log.d("[BITMAP]", "Original width : " + options.outWidth + ", and height : " + options.outHeight);
         int megaPixels = (int) Math.ceil(getMegaPixels());
-        Log.d("[BITMAP]","megapixels: " + megaPixels);
         options.inSampleSize = (screenshot) ? 1 : 2;
-        Log.d("[BITMAP]","insamplesize: " + options.inSampleSize);
         options.inJustDecodeBounds = false;
         Bitmap bm = BitmapFactory.decodeFile(mImageUri.getPath(), options);
-        Log.d("[BITMAP]", "bitmap size: " + bm.getByteCount());
         return bm;
     }//end of getResizedBitmap(Uri)
 
@@ -126,18 +121,15 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                 return onInput(responseIn);
             }
             else {
-                Log.i(TAG, "responseCode=" + conn.getResponseCode());
                 responseIn = conn.getErrorStream();
                 StringBuilder sb = new StringBuilder();
                 Scanner scanner = new Scanner(responseIn);
                 while (scanner.hasNext()) {
                     sb.append(scanner.next());
                 }
-                Log.i(TAG, "error response: " + sb.toString());
                 return null;
             }
         } catch (Exception ex) {
-            Log.e(TAG, "Error during POST", ex);
             return null;
         } finally {
             try {
@@ -171,7 +163,6 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         String id = root.getJSONObject("data").getString("id");
 
         String deletehash = root.getJSONObject("data").getString("deletehash");
-        Log.i(TAG, "new imgur url: http://imgur.com/" + id + " (delete hash: " + deletehash + ")");
         return id;
     }//end of onInput(InputStream)
 

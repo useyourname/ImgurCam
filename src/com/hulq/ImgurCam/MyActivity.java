@@ -7,19 +7,15 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.content.res.Configuration;
 import java.util.Date;
-import android.os.Environment;
 import java.io.File;
 import android.os.FileObserver;
 import android.util.DisplayMetrics;
 import android.widget.ImageView;
 import android.content.Intent;
 import java.io.IOException;
-import android.util.Log;
 import android.provider.MediaStore;
 import java.text.SimpleDateFormat;
 import android.net.Uri;
-
-import android.app.ActivityManager;
 
 public class MyActivity extends Activity {
 
@@ -49,7 +45,6 @@ public class MyActivity extends Activity {
             );
             image.deleteOnExit();
         }catch(IOException ex){
-            Log.e("Pic IOException", "createTempFile FAILED");
             System.out.println("createTempFile FAILED");
         }
         // Save a file: path for use with ACTION_VIEW intents
@@ -67,7 +62,6 @@ public class MyActivity extends Activity {
         options.inDensity = options.outWidth;
         options.inTargetDensity = displayMetrics.densityDpi;
         Bitmap bm = BitmapFactory.decodeFile(mImageUri.getPath(), options);
-        Log.d("Bitmap size", "screen bitmap: " + bm.getByteCount());
         return bm;
     }
 
@@ -120,11 +114,6 @@ public class MyActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        int memoryClass = am.getMemoryClass();
-        Log.v("onCreate", "memoryClass:" + Integer.toString(memoryClass));
-
         setContentView(R.layout.main);
 
         //delete files in cache
