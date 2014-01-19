@@ -16,7 +16,7 @@ import android.app.Service;
 
 import java.io.File;
 
-public class ScreenShotService extends Service{
+public class ScreenshotService extends Service{
 
     private FileObserver fileObserver;
 
@@ -40,7 +40,7 @@ public class ScreenShotService extends Service{
 //                localIntent.addFlags(268435456);
 //                ScreenshotService.this.startService(localIntent);
                 Uri photoUri = Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/" + path));
-                new ImgurUploadTask(photoUri, (Activity)ScreenShotService.this).execute();
+                new ImgurUploadTask(photoUri, (Activity)ImgurCamApplication.getAppContext()).execute();
             }
         };
         this.fileObserver.startWatching();
