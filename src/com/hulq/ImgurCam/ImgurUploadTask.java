@@ -42,16 +42,16 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
     private static final String TAG = ImgurUploadTask.class.getSimpleName();
     private static final String UPLOAD_URL = "https://api.imgur.com/3/image";
 
-    private Activity mActivity;
+    private Context context;
     private Uri mImageUri;  // local Uri to upload
 
     private NotificationCompat.Builder notiBuilder;
     private NotificationManager mNotificationManager;
     private boolean screenshot;
 
-    public ImgurUploadTask(Uri imageUri, Activity activity) {
+    public ImgurUploadTask(Uri imageUri, Context context) {
         this.mImageUri = imageUri;
-        this.mActivity = activity;
+        this.context = context;
     }
 
     private double getMegaPixels(){
@@ -81,20 +81,20 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         super.onPreExecute();
         if(mImageUri.getPath().contains("Screenshot"))screenshot = true;
 
-        notiBuilder = new NotificationCompat.Builder(mActivity);
+        notiBuilder = new NotificationCompat.Builder(context);
         notiBuilder.setContentTitle("Picture Upload")
                 .setContentText("Upload in progress")
                 .setSmallIcon(R.drawable.upload);
         // Sets an activity indicator for an operation of indeterminate length
         notiBuilder.setProgress(0, 0, true);
         // Issues the notification
-        mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.cancel(0);
         mNotificationManager.notify(0, notiBuilder.build());
     }
 
     public boolean isConnectedOrConnecting() {
-        ConnectivityManager cm = (ConnectivityManager) mActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         if (netInfo != null && netInfo.isConnectedOrConnecting()) {
             return true;
@@ -114,7 +114,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             conn.setDoOutput(true);
             conn.setChunkedStreamingMode(0);
 
-            ImgurAuthorization.getInstance(mActivity).addToHttpURLConnection(conn);
+            ImgurAuthorization.getInstance(context).addToHttpURLConnection(conn);
 
             OutputStream out = conn.getOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
@@ -185,24 +185,24 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             return;
         }
 
-        ClipboardManager clipboard = (ClipboardManager) mActivity.getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         clipboard.setPrimaryClip(ClipData.newPlainText("Imgur URL", "imgur.com/" + result));
 
         if(!screenshot){
-            TextView title = new TextView(mActivity);
+            TextView title = new TextView(context);
             title.setText("URL has been copied");
             title.setGravity(Gravity.CENTER);
             title.setTextSize(25.f);
             title.setTextColor(Color.parseColor("#33b5e5"));
 
-            TextView url = new TextView(mActivity);
+            TextView url = new TextView(context);
             url.setText("imgur.com/" + result);
             url.setGravity(Gravity.CENTER);
             url.setTextIsSelectable(true);
             url.setPadding(0, 50, 0, 50);
             url.setTextSize(18);
 
-            Builder popup = new AlertDialog.Builder(mActivity);
+            Builder popup = new AlertDialog.Builder(context);
             popup.setCustomTitle(title);
             popup.setView(url);
 //            popup.setMessage("imgur.com/" + result);
@@ -212,12 +212,12 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
                             dialog.cancel();
-                            mActivity.recreate();
+                            ((Activity)context).recreate();
                         }
                     });
 
             final AlertDialog alert = popup.create();
-            if(!mActivity.isFinishing() && !screenshot){
+            if(!screenshot && !((Activity)context).isFinishing()){
                 alert.show();
             }
         }
@@ -227,7 +227,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         notificationIntent.setComponent(ComponentName.unflattenFromString("com.android.chrome/com.android.chrome.Main"));
         notificationIntent.addCategory("android.intent.category.LAUNCHER");
         notificationIntent.setData(Uri.parse("imgur.com/" + result));
-        PendingIntent pIntent = PendingIntent.getActivity(mActivity, 0, notificationIntent, 0);
+        PendingIntent pIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
 
 
         notiBuilder.setProgress(0, 0, false)
@@ -243,17 +243,17 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             bigPictureStyle.setBigContentTitle("Image URL copied");
             bigPictureStyle.setSummaryText("imgur.com/" + result);
             bigPictureStyle.bigPicture((screenshot) ?
-                    ((MyActivity)mActivity).decodeFile(mImageUri) :
-                    ((MyActivity)mActivity).bImage);
+                    MyActivity.decodeFile(mImageUri, context) :
+                    ((MyActivity)context).bImage);
             notiBuilder.setStyle(bigPictureStyle);
         }
 
-        mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.cancel(0);
         mNotificationManager.notify(0, notiBuilder.build());
 
         //Toast
-        Toast toast = Toast.makeText(mActivity, "Copied to clipboard:\nimgur.com/" + result, 1);
+        Toast toast = Toast.makeText(context, "Copied to clipboard:\nimgur.com/" + result, 1);
         toast.show();
 
         //delete picture
@@ -264,21 +264,21 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
     }//end of onPostExecute(String result)*/
 
     private void handleFailedUpload(){
-        if(!mActivity.isFinishing() && !screenshot){
-            TextView title = new TextView(mActivity);
+        if(!screenshot && !((Activity)context).isFinishing()){
+            TextView title = new TextView(context);
             title.setText("Image upload has failed :(");
             title.setGravity(Gravity.CENTER);
             title.setTextSize(25.f);
             title.setTextColor(Color.parseColor("#33b5e5"));
 
-            TextView body = new TextView(mActivity);
+            TextView body = new TextView(context);
             body.setText("Check your network connection!");
             body.setGravity(Gravity.CENTER);
             body.setTextIsSelectable(false);
             body.setTextSize(18);
             body.setPadding(0, 50, 0, 50);
 
-            Builder popup = new AlertDialog.Builder(mActivity);
+            Builder popup = new AlertDialog.Builder(context);
             popup.setCustomTitle(title);
             popup.setView(body);
             popup.setCancelable(false);
@@ -287,7 +287,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
                             dialog.cancel();
-                            mActivity.recreate();
+                            ((Activity)context).recreate();
                         }
                     });
             popup.setNegativeButton("Retry Upload",
@@ -295,7 +295,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                         public void onClick(DialogInterface dialog, int which) {
                             //dismiss the dialog
                             dialog.cancel();
-                            new ImgurUploadTask(mImageUri, mActivity).execute();
+                            new ImgurUploadTask(mImageUri, context).execute();
                         }
                     });
 
@@ -309,7 +309,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                 .setContentText("Please check your network connection")
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setAutoCancel(true);
-        mNotificationManager = (NotificationManager) mActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.cancel(0);
         mNotificationManager.notify(0, notiBuilder.build());
     }//end of handleNullResult()*/

@@ -5,6 +5,7 @@ package com.hulq.ImgurCam;
  */
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.net.Uri;
 import android.os.Environment;
@@ -32,10 +33,12 @@ public class ScreenshotService extends Service{
         {
             public void onEvent(int event, String path)
             {
-                Log.d("Screenshot", "new screenshot " + path);
-                Uri photoUri = Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/" + path));
-                new ImgurUploadTask(photoUri, (Activity)ImgurCamApplication.getAppContext()).execute();
-                Log.d("screenshot", "screenshot upload");
+                if ((event == FileObserver.CLOSE_WRITE)){
+                    Log.d("Screenshot", "new screenshot " + path);
+                    Uri photoUri = Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/Screenshots/" + path));
+                    new ImgurUploadTask(photoUri, ImgurCamApplication.getAppContext()).execute();
+                    Log.d("screenshot", "screenshot upload");
+                }
             }
         };
         this.fileObserver.startWatching();

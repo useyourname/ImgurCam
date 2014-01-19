@@ -1,6 +1,7 @@
 package com.hulq.ImgurCam;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -71,8 +72,8 @@ public class MyActivity extends Activity {
         };
     }//end of createObserver()*/
 
-    public Bitmap decodeFile(Uri mImageUri){
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+    public static Bitmap decodeFile(Uri mImageUri, Context context){
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(mImageUri.getPath(), options);
@@ -81,7 +82,7 @@ public class MyActivity extends Activity {
         options.inDensity = options.outWidth;
         options.inTargetDensity = displayMetrics.densityDpi;
         Bitmap bm = BitmapFactory.decodeFile(mImageUri.getPath(), options);
-//        Log.d("Bitmap size", "Bitmap size: " + bm.getByteCount());
+        Log.d("Bitmap size", "screen bitmap: " + bm.getByteCount());
         return bm;
     }
 
@@ -116,7 +117,7 @@ public class MyActivity extends Activity {
             finish();
         } else {
             Uri photoUri = Uri.parse(currentPhotoPath);
-            bImage = decodeFile(photoUri);
+            bImage = decodeFile(photoUri, MyActivity.this);
             imageView.setImageBitmap(bImage);
             uploadTask = new ImgurUploadTask(photoUri, this);
             uploadTask.execute();

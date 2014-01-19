@@ -1,10 +1,12 @@
 package com.hulq.ImgurCam;
 
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Intent;
 import android.os.FileObserver;
 import android.content.Context;
+import android.util.Log;
 
 /**
  * Created by raianhuq on 2014-01-14.
