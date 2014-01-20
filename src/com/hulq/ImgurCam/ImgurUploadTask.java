@@ -119,7 +119,6 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             out.close();
             bitmap.recycle();
             bitmap = null;
-            System.gc();
 
             if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 responseIn = conn.getInputStream();
