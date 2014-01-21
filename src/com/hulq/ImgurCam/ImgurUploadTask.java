@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.json.JSONObject;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -22,20 +20,19 @@ import android.os.Build;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
 import android.content.Context;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import java.io.File;
 import android.view.Gravity;
 import android.content.Intent;
-import android.net.NetworkInfo;
 import android.app.Notification;
 import android.support.v4.app.NotificationCompat;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
 
@@ -54,25 +51,20 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         this.context = context;
     }
 
-    private double getMegaPixels(){
+    /*private double getMegaPixels(){
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(mImageUri.getPath(), options);
         return (options.outHeight * options.outWidth) / 1024000.0;
-    }//end of getMegaPixels
+    }//end of getMegaPixels*/
 
     private Bitmap getResizedBitmap(Uri mImageUri){
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(mImageUri.getPath(), options);
-        Log.d("[BITMAP]", "Original width : " + options.outWidth + ", and height : " + options.outHeight);
-        int megaPixels = (int) Math.ceil(getMegaPixels());
-        Log.d("[BITMAP]","megapixels: " + megaPixels);
         options.inSampleSize = (screenshot) ? 1 : 2;
-        Log.d("[BITMAP]","insamplesize: " + options.inSampleSize);
         options.inJustDecodeBounds = false;
         Bitmap bm = BitmapFactory.decodeFile(mImageUri.getPath(), options);
-        Log.d("[BITMAP]", "bitmap size: " + bm.getByteCount());
         return bm;
     }//end of getResizedBitmap(Uri)
 
@@ -93,11 +85,11 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         mNotificationManager.notify(0, notiBuilder.build());
     }
 
-    public boolean isConnectedOrConnecting() {
+    /*public boolean isConnectedOrConnecting() {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return ( (netInfo != null) && netInfo.isConnectedOrConnecting() );
-    }
+    }//end of isConnectedOrConnecting()*/
 
     @Override
     protected String doInBackground(Void... params) {
@@ -125,18 +117,9 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                 return onInput(responseIn);
             }
             else {
-                Log.i(TAG, "responseCode=" + conn.getResponseCode());
-                responseIn = conn.getErrorStream();
-                StringBuilder sb = new StringBuilder();
-                Scanner scanner = new Scanner(responseIn);
-                while (scanner.hasNext()) {
-                    sb.append(scanner.next());
-                }
-                Log.i(TAG, "error response: " + sb.toString());
                 return null;
             }
         } catch (Exception ex) {
-            Log.e(TAG, "Error during POST", ex);
             return null;
         } finally {
             try {
@@ -148,7 +131,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         }
     }//end of doInBackground()*/
 
-    private static int copy(InputStream input, OutputStream output) throws IOException {
+    /*private static int copy(InputStream input, OutputStream output) throws IOException {
         byte[] buffer = new byte[8192];
         int count = 0;
         int n = 0;
@@ -157,7 +140,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
             count += n;
         }
         return count;
-    }//end of copy
+    }//end of copy*/
 
     protected String onInput(InputStream in) throws Exception {
         StringBuilder sb = new StringBuilder();
@@ -169,8 +152,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         JSONObject root = new JSONObject(sb.toString());
         String id = root.getJSONObject("data").getString("id");
 
-        String deletehash = root.getJSONObject("data").getString("deletehash");
-        Log.i(TAG, "new imgur url: http://imgur.com/" + id + " (delete hash: " + deletehash + ")");
+//        String deletehash = root.getJSONObject("data").getString("deletehash");
         return id;
     }//end of onInput(InputStream)
 
@@ -184,7 +166,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         clipboard.setPrimaryClip(ClipData.newPlainText("Imgur URL", "imgur.com/" + result));
 
-        if(!screenshot){
+        if(!screenshot && !((Activity)context).isFinishing()){
             TextView title = new TextView(context);
             title.setText("URL has been copied");
             title.setGravity(Gravity.CENTER);
@@ -212,7 +194,7 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                     });
 
             final AlertDialog alert = popup.create();
-            if(!screenshot && !((Activity)context).isFinishing()){
+            if(!((Activity)context).isFinishing()){
                 alert.show();
             }
         }
@@ -295,7 +277,9 @@ public class ImgurUploadTask extends AsyncTask<Void, Void, String> {
                     });
 
             final AlertDialog alert = popup.create();
-            alert.show();
+            if(!((Activity)context).isFinishing()){
+                alert.show();
+            }
         }
 
         notiBuilder.setProgress(0, 0, false)

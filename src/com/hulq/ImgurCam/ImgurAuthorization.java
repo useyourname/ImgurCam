@@ -41,10 +41,10 @@ public class ImgurAuthorization {
         return INSTANCE;
     }
 
-    public boolean isLoggedIn() {
+    /*public boolean isLoggedIn() {
         SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFERENCES_NAME, 0);
         return !TextUtils.isEmpty(prefs.getString("access_token", null));
-    }
+    }//end of isLoggedIn()*/
 
     public void addToHttpURLConnection(HttpURLConnection conn) {
         SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFERENCES_NAME, 0);
@@ -58,16 +58,16 @@ public class ImgurAuthorization {
         }
     }
 
-    public void saveRefreshToken(String refreshToken, String accessToken, long expiresIn){
+    /*public void saveRefreshToken(String refreshToken, String accessToken, long expiresIn){
         context.getSharedPreferences(SHARED_PREFERENCES_NAME, 0)
                 .edit()
                 .putString("access_token", accessToken)
                 .putString("refresh_token", refreshToken)
                 .putLong("expires_in", expiresIn)
                 .commit();
-    }
+    }//end of saveRefreshToken
 
-    public String requestNewAccessToken() {
+    /*public String requestNewAccessToken() {
         SharedPreferences prefs = context.getSharedPreferences(SHARED_PREFERENCES_NAME, 0);
         String refreshToken = prefs.getString("refresh_token", null);
 
@@ -125,9 +125,9 @@ public class ImgurAuthorization {
                 conn.disconnect();
             } catch (Exception ignore) {}
         }
-    }
+    }//end of requestNewAccessToken*/
 
-    private void handleAccessTokenResponse(InputStream in) throws JSONException {
+    /*private void handleAccessTokenResponse(InputStream in) throws JSONException {
         StringBuilder sb = new StringBuilder();
         Scanner scanner = new Scanner(in);
         while (scanner.hasNext()) {
@@ -149,13 +149,13 @@ public class ImgurAuthorization {
                 .putString("token_type", tokenType)
                 .putString("account_username", accountUsername)
                 .commit();
-    }
+    }//end of handleAccessTokenResponse*/
 
-    public void logout() {
+    /*public void logout() {
         context.getSharedPreferences(SHARED_PREFERENCES_NAME, 0)
                 .edit()
                 .clear()
                 .commit();
-    }
+    }//end of logout()*/
 
-}
+}//end of class

@@ -7,14 +7,11 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.content.res.Configuration;
 import java.util.Date;
-import android.os.Environment;
 import java.io.File;
-import android.os.FileObserver;
 import android.util.DisplayMetrics;
 import android.widget.ImageView;
 import android.content.Intent;
 import java.io.IOException;
-import android.util.Log;
 import android.provider.MediaStore;
 import java.text.SimpleDateFormat;
 import android.net.Uri;
@@ -24,15 +21,10 @@ import android.app.ActivityManager;
 public class MyActivity extends Activity {
 
     private static final int ACTION_TAKE_PHOTO_B = 1;
-    private static final int ACTION_TAKE_PHOTO_S = 2;
-    private static final int ACTION_TAKE_VIDEO = 3;
     private ImageView imageView;
 
     private String currentPhotoPath;
     private File photoFile;
-    private FileObserver observer;
-
-    private ImgurUploadTask uploadTask;
     public Bitmap bImage;
 
     private File createImageFile() throws IOException {
@@ -48,10 +40,7 @@ public class MyActivity extends Activity {
                     storageDir      /* directory */
             );
             image.deleteOnExit();
-        }catch(IOException ex){
-            Log.e("Pic IOException", "createTempFile FAILED");
-            System.out.println("createTempFile FAILED");
-        }
+        }catch(IOException ex){}
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
@@ -67,7 +56,6 @@ public class MyActivity extends Activity {
         options.inDensity = options.outWidth;
         options.inTargetDensity = displayMetrics.densityDpi;
         Bitmap bm = BitmapFactory.decodeFile(mImageUri.getPath(), options);
-        Log.d("Bitmap size", "screen bitmap: " + bm.getByteCount());
         return bm;
     }
 
@@ -89,13 +77,6 @@ public class MyActivity extends Activity {
         }
     }//end of dispatchTakePictureIntent(int actionCode)*/
 
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        Uri photoUri = Uri.parse(currentPhotoPath);
-        mediaScanIntent.setData(photoUri);
-        this.sendBroadcast(mediaScanIntent);
-    }//end of galleryAddPic()*/
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) {
             photoFile.delete();
@@ -104,8 +85,7 @@ public class MyActivity extends Activity {
             Uri photoUri = Uri.parse(currentPhotoPath);
             bImage = decodeFile(photoUri, MyActivity.this);
             imageView.setImageBitmap(bImage);
-            uploadTask = new ImgurUploadTask(photoUri, this);
-            uploadTask.execute();
+            new ImgurUploadTask(photoUri, this).execute();
         }
     }//end of onActivityResult(int requestCode, int resultCode, Intent data)*/
 
@@ -120,11 +100,6 @@ public class MyActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        int memoryClass = am.getMemoryClass();
-        Log.v("onCreate", "memoryClass:" + Integer.toString(memoryClass));
-
         setContentView(R.layout.main);
 
         //delete files in cache
